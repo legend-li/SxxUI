@@ -1,6 +1,6 @@
-# calendar
+# SxxUI
 
-> A Vue.js project
+> 一个基于vue2.x的组件库
 
 ## Build Setup
 
