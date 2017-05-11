@@ -1,5 +1,6 @@
 <template>
-  <div id="Message" class="message" :class="{'message-info': type===0, 'message-pop': type!==0}" :style="{opacity: opacity,transitionDuration: transitionTime+'s'}">
+  <div id="Message" class="message" :class="{'message-info': type===0, 'message-pop': type!==0}" :style="{opacity: opacity,transitionDuration: transitionTime+'s'}"
+   @touchstart.prevent>
   	<div class="information" v-if="type===0" v-text="title"></div>
     <div class="display-table" v-else>
     	<div class="display-table-cell">

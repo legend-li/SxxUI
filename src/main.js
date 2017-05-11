@@ -15,5 +15,8 @@ Vue.use(Message);
 
 new Vue({
   el: '#app',
-  render: h => h(App)
+  render: h => h(App),
+  mounted () {
+  	this.$message('提示')
+  }
 })

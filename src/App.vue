@@ -8,7 +8,7 @@
   	
   	<sxx-picker :list="list" :defaultValue="2016" :onChange="getValue"></sxx-picker>
   	-->
-  	<sxx-load-more :topLoading="topLoading" :topLoadStatus="true" :bottomLoadStatus="true" :width="'100%'" :height="'10rem'">
+  	<sxx-load-more :topLoading="topLoading" :bottomLoading="bottomLoading" :topLoadStatus="true" :bottomLoadStatus="true" :width="'100%'" :height="'10rem'">
   		<div style="font-size: 18px;text-align: center;" v-for="item in 50" v-text="item"></div>
   	</sxx-load-more>
   	
@@ -36,6 +36,13 @@ export default {
   			console.log('closeLoading。。。');
   			closeLoading();
   		}, 1000)
+  	},
+  	bottomLoading (closeLoading) {
+  		console.log('bottom loading')
+  		setTimeout(function(){
+  			console.log('bottom closeLoading。。。');
+  			closeLoading();
+  		}, 5000)
   	},
   	cancel () {
   		console.log('datetime组件已关闭！');

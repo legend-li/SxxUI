@@ -1,18 +1,16 @@
 <template>
 	<div ref="sxxLoadMore" id="sxx-load-more" class="sxx-load-more" :style="{width: width, height: height}"
-	 @touchstart="touchStart" @touchmove="touchMove" @touchend="touchEnd" @scroll="scroll">
+	 @touchstart="touchStart" @touchmove="touchMove" @touchend="touchEnd">
 		<div class="sxx-load-top" :style="{marginTop: loadTopMargin, transition: 'margin '+topTransition+'s'}">
 			<div class="sxx-load-icon" :class="{'sxx-load-rotate': loadTopStatus===0}" v-if="loadTopStatus!==2">↓</div>
 			<img :src="loadingAnimation" v-if="loadTopStatus===2" />
 			<div class="sxx-load-text" v-text="loadTopStatus===0 ? loadTopText1 : (loadTopStatus===1 ? loadTopText2 : loadTopText3)"></div>
 		</div>
 		<slot></slot>
-		<!--
 		<div class="sxx-load-bottom" v-if="bottomLoadStatus&&bottomStatus">
-			<img :src="loadingAnimation" v-if="loadTopStatus===2" />
-			<div class="sxx-load-text" v-text="loadTopStatus===0 ? loadTopText1 : (loadTopStatus===1 ? loadTopText2 : loadTopText3)"></div>
+			<img :src="loadingAnimation" />
+			<div class="sxx-load-text">加载更多......</div>
 		</div>
-		-->
 	</div>
 </template>
 
@@ -39,8 +37,8 @@ export default {
   		$rootFontSize: parseFloat(document.querySelector('html').style.fontSize), //根fontSize的大小
   		topTransition: 0, //顶部loading盒子的过渡时间
   		bottomTransition: 0, //底部loading盒子的过渡时间
-  		initLoadTopMargin: '-'+(parseFloat(document.querySelector('html').style.fontSize)*0.7)+'px', //load-top盒子的margin-top的初始值
-  		loadTopMargin: '-'+(parseFloat(document.querySelector('html').style.fontSize)*0.7)+'px', //load-top盒子的margin-top的值
+  		initLoadTopMargin: '-'+(parseFloat(document.querySelector('html').style.fontSize)*1.1)+'px', //load-top盒子的margin-top的初始值
+  		loadTopMargin: '-'+(parseFloat(document.querySelector('html').style.fontSize)*1.1)+'px', //load-top盒子的margin-top的值
   		loadTopStatus: 0,
   		loadTopText1: '下拉即可刷新',
   		loadTopText2: '释放即可刷新',
@@ -49,13 +47,10 @@ export default {
   		initStart: 0, //滚动盒子touchstart位置
   		start: 0, //上一个滚动位置
   		move: 0, //滚动盒子touchmove位置
-  		//end: 0, //滚动盒子touchend位置
   		topStatus: false, //是否到达顶部
   		bottomStatus: false, //是否到达底部
+  		bottomIsLoading: false, //加载更多状态：true-正在加载，false-已经加载完毕
   	};
-  },
-  created () {
-  	console.log(this.loadingAnimation)
   },
   methods: {
   	getScrollTop () { //获取滚动盒子的scrollTop
@@ -68,9 +63,9 @@ export default {
   		return this.$refs.sxxLoadMore.clientHeight;
   	},
   	isTop () {
-  		console.log('getScrollTop：', this.getScrollTop())
+  		//console.log('getScrollTop：', this.getScrollTop())
   		if(this.getScrollTop() <= 0){
-  			console.log('到顶部了！')
+  			//console.log('到顶部了！')
   			return true;
   		}else{
   			return false;
@@ -78,7 +73,7 @@ export default {
   	},
   	isBottom () {
   		if(this.getScrollTop()+this.getClientHeight() >= this.getScrollHeight()){
-  			console.log('到底部了！')
+  			//console.log('到底部了！')
   			return true;
   		}else{
   			return false;
@@ -94,15 +89,6 @@ export default {
   			this.bottomTransition = 0;
   		}, s*1000)
   	},
-  	scroll () {
-  		console.log('scrollTop:', this.$refs.sxxLoadMore.scrollTop)
-  		if(this.bottomLoadStatus){
-  			if(this.isBottom()){
-	  			//上拉加载更多
-	  			console.log('加载更多......')
-	  		}
-  		}
-  	},
   	touchStart (e) {
   		let start = e.touches[0].pageY;
   		this.start = start;
@@ -114,17 +100,10 @@ export default {
 	  			this.topStatus = false;
 	  		}
   		}
-  		if(this.bottomLoadStatus){
-  			if(this.isBottom()){
-	  			this.bottomStatus = true;
-	  		}else{
-	  			this.bottomStatus = false;
-	  		}
-  		}
   	},
   	touchMove (e) {
   		let move = e.touches[0].pageY;
-  		console.log('move:', move)
+  		//console.log('move:', move)
   		this.move = move;
   		let dir;
   		if(this.dir === ''){
@@ -156,17 +135,22 @@ export default {
   			this.start = move;
   		}
   		//上拉加载更多
-  		if(this.bottomLoadStatus && this.bottomStatus && dir==='up'){
-  			console.log('加载更多......');
+  		if(this.bottomLoadStatus && this.isBottom() && dir==='up' && !this.bottomIsLoading){
+  			this.bottomStatus = true;
+  			this.bottomIsLoading = true;
+  			//console.log('加载更多......');
+  			this.bottomLoading(() => {
+  				this.dir = '';
+  				this.bottomIsLoading = false;
+  				this.bottomStatus = false;
+  			})
   		}
   	},
   	touchEnd (e) {
   		const self = this;
-//  		let end = e.changedTouches[0].pageY;
-//  		console.log('end:', end)
   		if(self.topStatus){
   			if(self.loadTopStatus){
-  				console.log('loading...');
+  				//console.log('loading...');
 				self.loadTopStatus = 2;
   				self.topTransition = 0.3;
 				let loadingTopMargin = '0px';
@@ -174,13 +158,12 @@ export default {
 				self.clearTopTransition(0.3);
 				setTimeout(() => {
 					function closeLoading() {
-						console.log('loaded!')
+						//console.log('loaded!')
 	  					self.topTransition = 0.3;
 						let initTopMargin = self.initLoadTopMargin;
 						self.loadTopMargin = initTopMargin;
 						self.clearTopTransition(0.3);
 						self.loadTopStatus = 0;
-						self.dir = '';
 					}
 					if(self.topLoading){
 						self.topLoading(() => {
@@ -193,18 +176,14 @@ export default {
 					}
 				}, 300)
   			}else{
-  				console.log('reset top!');
+  				//console.log('reset top!');
   				self.topTransition = 0.3;
   				let initTopMargin = self.initLoadTopMargin;
   				self.loadTopMargin = initTopMargin;
   				self.clearTopTransition(0.3);
   			}
   		}
-  		if(this.bottomLoadStatus){
-  			this.dir = '';
-  		}
-
-//  		this.end = end;
+  		self.dir = '';
   	}
   }
 }
@@ -219,11 +198,13 @@ export default {
 	overflow-y: scroll;
 	-webkit-overflow-scrolling: touch;
 }
-.sxx-load-top{
+.sxx-load-top, .sxx-load-bottom{
 	display: -webkit-box;
     display: -webkit-flex;
     display: flex;
     width: 100%;
+    padding-top: 0.2rem;
+    padding-bottom: 0.2rem;
     -webkit-box-align: center;
     -webkit-align-items: center;
     align-items: center;
@@ -233,7 +214,7 @@ export default {
     -webkit-transform:translate3d(0,0,0);
 	transform:translate3d(0,0,0);
 }
-.sxx-load-top > img{
+.sxx-load-top > img, .sxx-load-bottom > img{
 	display: inline-block;
 	width: 0.3rem;
 	margin-right: 0.1rem;
@@ -259,5 +240,4 @@ export default {
 	color: #333;
 	font-weight: 500;
 }
-
 </style>
