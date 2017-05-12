@@ -13,7 +13,6 @@
 <script>
 export default {
   name: 'sxx-picker',
-  props: ['list', 'onChange', 'defaultValue'],
   props: {
   	list: { //list滚动列表
   		type: Array,
