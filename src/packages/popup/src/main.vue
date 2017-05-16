@@ -1,6 +1,6 @@
 <template>
-	<div id="sxx-popup" class="sxx-popup" :style="{opacity: opacity}">
-		
+	<div id="sxx-popup" class="sxx-popup" :style="{opacity: opacity}" v-show="show" @touchend="layerTap?layerTap:''">
+		<slot>这是个自定义弹窗组件！</slot>
 	</div>
 </template>
 
@@ -8,28 +8,43 @@
 export default {
   name: 'sxx-popup',
   props: {
-  	list: { //list滚动列表
-  		type: Array,
+  	visible: {
+  		type: Boolean,
   		required: true
   	},
-  	onChange: Function,
-  	defaultValue: [String, Number]
+  	layerTap: Function,
+  	afterClose: Function
   },
   data () {
   	return {
   		opacity: 0, //默认初始化透明度
+  		show: false,
   	};
   },
-  watch: {
-  	list (val, oldVal){
-  		this.translateY = this.sectionH*2;
+  created () {
+  	if(this.visible){
+  		this.show = this.visible;
   	}
   },
-  methods: {
-  	//
+  watch: {
+  	visible (val){
+  		const self = this;
+  		if(val){
+  			self.opacity = 1;
+  		}else{
+  			self.opacity = 0;
+  		}
+  		setTimeout(() => {
+  			self.show = val;
+  			if(!val&&self.afterClose){
+  				self.afterClose();
+  			}
+  		}, 300);
+  	}
   },
   mounted () {
   	const self = this;
+  	self.show = self.visible;
   	setTimeout(() => {
   		self.opacity = 1;
   	},1)
@@ -40,6 +55,15 @@ export default {
 <style>
 .sxx-popup{
 	z-index: 999;
+	display: -webkit-box;
+    display: -webkit-flex;
+    display: flex;
+    -webkit-box-align: center;
+    -webkit-align-items: center;
+    align-items: center;
+    -webkit-box-pack: center;
+    -webkit-justify-content: center;
+    justify-content: center;
 	position: fixed;
 	top: 0;
 	bottom: 0;
@@ -48,44 +72,7 @@ export default {
 	word-break: break-all;
 	transition: opacity .3s ease;
 	-webkit-transition: opacity .3s ease;
-	overflow: scroll;
-}
-.sxx-picker-box{
-	position: relative;
-	width: 100%;
-	height: 4rem;
+	background-color: rgba(0,0,0,0.4);
 	overflow: hidden;
-}
-.sxx-picker-section{
-	width: 100%;
-	-webkit-transition-property: transform;
-	transition-property: transform;
-    -webkit-transition-timing-function: ease-out;
-	transition-timing-function: ease-out;
-}
-.sxx-picker-section > div{
-	font-size: 0.3rem;
-    line-height: 0.8rem;
-    color: #333333;
-    text-align: center;
-}
-.sxx-picker-cover{
-	position: absolute;
-	left: 0;
-	top: 0;
-	width: 100%;
-	height: 100%;
-	background: linear-gradient(#fff 0%, rgba(255,255,255,0) 45%, rgba(255,255,255,0) 55%, #fff 100%);
-    background: -webkit-linear-gradient(#fff 0%, rgba(255,255,255,0) 45%, rgba(255,255,255,0) 55%, #fff 100%);
-}
-.sxx-picker-selected{
-	position: absolute;
-	left: 0;
-	top: 1.6rem;
-	width: 100%;
-	height: 0.8rem;
-	border-top: 1px solid #eaeaea;
-	border-bottom: 1px solid #eaeaea;
-	box-sizing: border-box;
 }
 </style>

@@ -19,9 +19,9 @@
  * 
  * options说明：
  * {
- *     visible: false, // 对话框是否可见，默认为false，[type: Boolean]
+ *     visible: false, // 对话框是否可见，默认为false，[type: Boolean][必填项]
  *
- *     maskClosable: false, // 点击蒙层是否允许关闭，默认为false[type: Boolean]
+ *     layerTap: '', // 蒙层点击后调起的钩子函数，默认为''[type: Function]
  *
  *     afterClose: '', // popup 完全关闭后的回调，[type: Function]
  *
