@@ -1,5 +1,5 @@
 <template>
-	<div id="sxx-datetime-picker" class="sxx-calendar" :style="{opacity: opacity}">
+	<div id="sxx-datetime-picker" class="sxx-calendar" :style="{opacity: opacity}" v-if="showStatus">
 		<div class="sxx-calendar-box">
 			<div class="sxx-calendar-tit">
 				<div @touchend="close('cancel')">取消</div>
@@ -48,6 +48,7 @@ export default {
   	'sxx-picker': Picker
   },
   props: {
+  	visibility: Boolean,
   	type: {
   		type: String,
   		required: true
@@ -98,6 +99,7 @@ export default {
   data () {
   	return {
   		opacity: 0, //默认初始化透明度
+  		showStatus: true, //组件是否显示
   		thisY: new Date().getFullYear(), //今年的年份
   		thisM: new Date().getMonth()+1, //当前月份
   		thisD: new Date().getDate(), //当前日子
@@ -128,6 +130,22 @@ export default {
   	};
   },
   watch: {
+  	visibility (val) {
+  		if(val){
+  			this.showStatus = val;
+  			setTimeout(() => {
+	  			this.opacity = 1;
+	  		},10)
+  		}else{
+  			this.opacity = 0;
+  			setTimeout(() => {
+	  			this.showStatus = val;
+	  		},300)
+  		}
+  	},
+  	defaultDatetime (val) {
+  		this.resetDatetime();
+  	},
   	selectValueY () {
   		this.updateSelect()
   	},
@@ -148,171 +166,175 @@ export default {
   	}
   },
   created () {
-  	const self = this;
-  	// 更新可选日期/时间
-    let startDate = self.startDate.trim();
-    let endDate = self.endDate.trim();
-    let startHour = Number(self.startH);
-    let endHour = Number(self.endH);
-    let startY = Number(self.startY);
-    let endY = Number(self.endY);
-    let startM = Number(self.startM);
-    let endM = Number(self.endM);
-    let startD = Number(self.startD);
-    let endD = Number(self.endD);
-    if(startDate){
-    	let arr = startDate.split('-');
-    	if(arr.length === 3){
-    		startY = Number(arr[0]);
-    		startM = Number(arr[1]);
-    		startD = Number(arr[2]);
-    		self.startY = arr[0];
-    		self.startM = arr[1];
-    		self.startD = arr[2];
-    	}
-    }
-    if(endDate){
-    	let arr = endDate.split('-');
-    	if(arr.length === 3){
-    		endY = Number(arr[0]);
-    		endM = Number(arr[1]);
-    		endD = Number(arr[2]);
-    		self.endY = arr[0];
-    		self.endM = arr[1];
-    		self.endD = arr[2];
-    	}
-    }
-    for(let m=startY, n=endY; m<=n; m++){
-    	self.listY.push(String(m));
-    }
-
-	for(let i=1; i<=12; i++){
-		self.listM.push(i>9 ? String(i) : '0'+i);
-	}
-
-	let days = self.getDays(self.thisY, self.thisM);
-	for(let i=1; i<=days; i++){
-		self.listD.push(i>9 ? String(i) : '0'+i);
-	}
-
-	if(self.startHour){
-		startHour = self.startHour;
-	}
-	if(self.endHour){
-		endHour = self.endHour;
-	}
-    for(let i=startHour, j=endHour; i<=j; i++){
-    	let H = i>9 ? String(i) : '0'+i;
-    	self.listH.push(H);
-    }
-
-    for(let i=0; i<60; i++){
-    	self.listm.push(i>9 ? String(i) : '0'+i);
-    }
-
-    for(let i=0; i<60; i++){
-    	self.listS.push(i>9 ? String(i) : '0'+i);
-    }
-
-  	// 更新默认选中日期/时间
-  	function defaultSelect() { //当没有接收到默认选中值的时候，选中当前日期/时间
-  		let thisY = String(self.thisY);
-  		let thisM = String(self.thisM>9 ? self.thisM : '0'+self.thisM);
-  		let thisD = String(self.thisD>9 ? self.thisD : '0'+self.thisD);
-  		let thisH = String(self.thisH>9 ? self.thisH : '0'+self.thisH);
-  		let thism = String(self.thism>9 ? self.thism : '0'+self.thism);
-  		let thisS = String(self.thisS>9 ? self.thisS : '0'+self.thisS);
-  		self.selectValueY = thisY;
-		self.selectValueM = thisM;
-		self.selectValueD = thisD;
-  		self.selectValueH = thisH;
-		self.selectValuem = thism;
-		self.selectValueS = thisS;
-  	}
-//    let selectValueM = self.thisM;
-  	let defaultDatetime = self.defaultDatetime.trim();
-  	if(defaultDatetime){
-  		let within = self.within(defaultDatetime, {
-  			startY: startY,
-  			endY: endY, 
-  			startM: startM,
-  			endM: endM, 
-  			startD: startD, 
-  			endD: endD, 
-  			startH: startHour,
-  			endH: endHour
-  		});
-  		if(!within){
-  			defaultSelect();
-  			self.$message('传入组件DatetimePicker的props：defaultDatetime不在可选范围内！');
-  			console.log('传入组件DatetimePicker的props：defaultDatetime不在可选范围内！');
-  			return;
-  		}
-  		let dateTimeArr = defaultDatetime.split(' ');
-  		if(dateTimeArr.length>0&&dateTimeArr.length<3){
-  			self.selectDatetime = defaultDatetime; //更新默认选中日期/时间到确定按钮选中的日期/时间
-  			dateTimeArr.forEach(function(item, index) {
-				if(!item) return;
-		  		let dateArr = item.split('-'), timeArr = item.split(':');
-		  		if(dateArr.length === 3){
-		  			self.selectValueY = dateArr[0];
-					self.selectValueM = dateArr[1];
-					self.selectValueD = dateArr[2];
-
-		  			if(Number(dateArr[0]) === startY){
-		  				let listM = [];
-			  			for(let i=startM, j=12; i<=j; i++){
-			  				let M = i>9 ? String(i) : '0'+i;
-			  				listM.push(M);
-			  			}
-			  			self.listM = listM;
-		  			}else if(Number(dateArr[0]) === endY){
-		  				let listM = [];
-			  			for(let i=1, j=endM; i<=j; i++){
-			  				let M = i>9 ? String(i) : '0'+i;
-			  				listM.push(M);
-			  			}
-			  			self.listM = listM;
-		  			}
-
-		  			if(Number(dateArr[1]) === startM){
-		  				let listD = [];
-			  			for(let i=startD, j=self.getDays(Number(dateArr[0]), Number(dateArr[1])); i<=j; i++){
-			  				let D = i>9 ? String(i) : '0'+i;
-			  				listD.push(D);
-			  			}
-			  			self.listD = listD;
-		  			}else if(Number(dateArr[1]) === endM){
-		  				let listD = [];
-			  			for(let i=1, j=endD; i<=j; i++){
-			  				let D = i>9 ? String(i) : '0'+i;
-			  				listD.push(D);
-			  			}
-			  			self.listD = listD;
-		  			}else{
-		  				let listD = [];
-			  			for(let i=1, j=self.getDays(Number(dateArr[0]), Number(dateArr[1])); i<=j; i++){
-			  				let D = i>9 ? String(i) : '0'+i;
-			  				listD.push(D);
-			  			}
-			  			self.listD = listD;
-		  			}
-		  		}else if(timeArr.length === 3){
-					self.selectValueH = timeArr[0];
-					self.selectValuem = timeArr[1];
-					self.selectValueS = timeArr[2];
-		  		}else{
-		  			self.$message('传入组件DatetimePicker的props：defaultDatetime格式不正确！');
-		  			console.log('传入组件DatetimePicker的props：defaultDatetime格式不正确！');
-		  		}
-			})
-  		}
-  	}else{
-  		defaultSelect();
-  	}
+  	this.showStatus = this.visibility;
+  	this.resetDatetime();
   },
   methods: {
   	$message: Message,
+  	resetDatetime () {
+  		const self = this;
+	  	// 更新可选日期/时间
+	    let startDate = self.startDate.trim();
+	    let endDate = self.endDate.trim();
+	    let startHour = Number(self.startH);
+	    let endHour = Number(self.endH);
+	    let startY = Number(self.startY);
+	    let endY = Number(self.endY);
+	    let startM = Number(self.startM);
+	    let endM = Number(self.endM);
+	    let startD = Number(self.startD);
+	    let endD = Number(self.endD);
+	    if(startDate){
+	    	let arr = startDate.split('-');
+	    	if(arr.length === 3){
+	    		startY = Number(arr[0]);
+	    		startM = Number(arr[1]);
+	    		startD = Number(arr[2]);
+	    		self.startY = arr[0];
+	    		self.startM = arr[1];
+	    		self.startD = arr[2];
+	    	}
+	    }
+	    if(endDate){
+	    	let arr = endDate.split('-');
+	    	if(arr.length === 3){
+	    		endY = Number(arr[0]);
+	    		endM = Number(arr[1]);
+	    		endD = Number(arr[2]);
+	    		self.endY = arr[0];
+	    		self.endM = arr[1];
+	    		self.endD = arr[2];
+	    	}
+	    }
+	    for(let m=startY, n=endY; m<=n; m++){
+	    	self.listY.push(String(m));
+	    }
+
+		for(let i=1; i<=12; i++){
+			self.listM.push(i>9 ? String(i) : '0'+i);
+		}
+
+		let days = self.getDays(self.thisY, self.thisM);
+		for(let i=1; i<=days; i++){
+			self.listD.push(i>9 ? String(i) : '0'+i);
+		}
+
+		if(self.startHour){
+			startHour = self.startHour;
+		}
+		if(self.endHour){
+			endHour = self.endHour;
+		}
+	    for(let i=startHour, j=endHour; i<=j; i++){
+	    	let H = i>9 ? String(i) : '0'+i;
+	    	self.listH.push(H);
+	    }
+
+	    for(let i=0; i<60; i++){
+	    	self.listm.push(i>9 ? String(i) : '0'+i);
+	    }
+
+	    for(let i=0; i<60; i++){
+	    	self.listS.push(i>9 ? String(i) : '0'+i);
+	    }
+
+	  	// 更新默认选中日期/时间
+	  	function defaultSelect() { //当没有接收到默认选中值的时候，选中当前日期/时间
+	  		let thisY = String(self.thisY);
+	  		let thisM = String(self.thisM>9 ? self.thisM : '0'+self.thisM);
+	  		let thisD = String(self.thisD>9 ? self.thisD : '0'+self.thisD);
+	  		let thisH = String(self.thisH>9 ? self.thisH : '0'+self.thisH);
+	  		let thism = String(self.thism>9 ? self.thism : '0'+self.thism);
+	  		let thisS = String(self.thisS>9 ? self.thisS : '0'+self.thisS);
+	  		self.selectValueY = thisY;
+			self.selectValueM = thisM;
+			self.selectValueD = thisD;
+	  		self.selectValueH = thisH;
+			self.selectValuem = thism;
+			self.selectValueS = thisS;
+	  	}
+	//    let selectValueM = self.thisM;
+	  	let defaultDatetime = self.defaultDatetime.trim();
+	  	if(defaultDatetime){
+	  		let within = self.within(defaultDatetime, {
+	  			startY: startY,
+	  			endY: endY, 
+	  			startM: startM,
+	  			endM: endM, 
+	  			startD: startD, 
+	  			endD: endD, 
+	  			startH: startHour,
+	  			endH: endHour
+	  		});
+	  		if(!within){
+	  			defaultSelect();
+	  			self.$message('传入组件DatetimePicker的props：defaultDatetime不在可选范围内！');
+	  			console.log('传入组件DatetimePicker的props：defaultDatetime不在可选范围内！');
+	  			return;
+	  		}
+	  		let dateTimeArr = defaultDatetime.split(' ');
+	  		if(dateTimeArr.length>0&&dateTimeArr.length<3){
+	  			self.selectDatetime = defaultDatetime; //更新默认选中日期/时间到确定按钮选中的日期/时间
+	  			dateTimeArr.forEach(function(item, index) {
+					if(!item) return;
+			  		let dateArr = item.split('-'), timeArr = item.split(':');
+			  		if(dateArr.length === 3){
+			  			self.selectValueY = dateArr[0];
+						self.selectValueM = dateArr[1];
+						self.selectValueD = dateArr[2];
+
+			  			if(Number(dateArr[0]) === startY){
+			  				let listM = [];
+				  			for(let i=startM, j=12; i<=j; i++){
+				  				let M = i>9 ? String(i) : '0'+i;
+				  				listM.push(M);
+				  			}
+				  			self.listM = listM;
+			  			}else if(Number(dateArr[0]) === endY){
+			  				let listM = [];
+				  			for(let i=1, j=endM; i<=j; i++){
+				  				let M = i>9 ? String(i) : '0'+i;
+				  				listM.push(M);
+				  			}
+				  			self.listM = listM;
+			  			}
+
+			  			if(Number(dateArr[1]) === startM){
+			  				let listD = [];
+				  			for(let i=startD, j=self.getDays(Number(dateArr[0]), Number(dateArr[1])); i<=j; i++){
+				  				let D = i>9 ? String(i) : '0'+i;
+				  				listD.push(D);
+				  			}
+				  			self.listD = listD;
+			  			}else if(Number(dateArr[1]) === endM){
+			  				let listD = [];
+				  			for(let i=1, j=endD; i<=j; i++){
+				  				let D = i>9 ? String(i) : '0'+i;
+				  				listD.push(D);
+				  			}
+				  			self.listD = listD;
+			  			}else{
+			  				let listD = [];
+				  			for(let i=1, j=self.getDays(Number(dateArr[0]), Number(dateArr[1])); i<=j; i++){
+				  				let D = i>9 ? String(i) : '0'+i;
+				  				listD.push(D);
+				  			}
+				  			self.listD = listD;
+			  			}
+			  		}else if(timeArr.length === 3){
+						self.selectValueH = timeArr[0];
+						self.selectValuem = timeArr[1];
+						self.selectValueS = timeArr[2];
+			  		}else{
+			  			self.$message('传入组件DatetimePicker的props：defaultDatetime格式不正确！');
+			  			console.log('传入组件DatetimePicker的props：defaultDatetime格式不正确！');
+			  		}
+				})
+	  		}
+	  	}else{
+	  		defaultSelect();
+	  	}
+  	},
   	within (str, obj) { //校验默认得datetime是否在可选范围之内
   		const self = this;
   		if(str){
@@ -474,22 +496,16 @@ export default {
   			}
   		}
   		this.opacity = 0;
-  		this.$el.addEventListener('transitionend', this.destroyElement);
-  	},
-  	destroyElement () {
-        this.$el.removeEventListener('transitionend', this.destroyElement);
-        this.$destroy(true);
-        this.$el.parentNode.removeChild(this.$el);
-        if (typeof this.callback === 'function') {
-          this.callback();
-        }
-    }
+  		this.$el.addEventListener('transitionend', () => {
+  			this.showStatus = false;
+  		});
+  	}
   },
   mounted () {
-  	const self = this;
-  	setTimeout(function() {
-  		self.opacity = 1;
-  	},1)
+  	console.log('visibility:', this.visibility)
+  	if(this.visibility){
+	  	this.opacity = 1;
+  	}
   }
 }
 </script>
