@@ -3,7 +3,7 @@
   	<!--
   	<h1 style="font-size: 14px;">selectValue: {{selectValue}}</h1>
   	-->
-  	<sxx-datetime-picker :type="'datetime'" :defaultDatetime="defaultDatetime" :startDate="startDate" :endDate="endDate" :startHour="startHour" :endHour="endHour"
+  	<sxx-datetime-picker :visibility="visibility" :type="'datetime'" :defaultDatetime="defaultDatetime" :startDate="startDate" :endDate="endDate" :startHour="startHour" :endHour="endHour"
   	 :cancel="cancel" :confirm="confirm"></sxx-datetime-picker>
   	<!--
   	<sxx-picker :list="list" :defaultValue="2016" :onChange="getValue"></sxx-picker>
@@ -22,6 +22,7 @@ export default {
   	return {
   		list: [2014,2015,2016,2017,2018,2019,2020,2021,2022,2023,2024,2025,2026,2027,2028,2029,2030,2031,2032,2033,2034,2035],
   		selectValue: '2016',
+  		visibility: true,
   		defaultDatetime: '2000-02-03 09:42:00',
   		//defaultDatetime: '',
   		startDate: '2000-02-02',
@@ -45,9 +46,11 @@ export default {
   		}, 5000)
   	},
   	cancel () {
+  		this.visibility = false;
   		console.log('datetime组件已关闭！');
   	},
   	confirm (val) {
+  		this.visibility = false;
   		console.log('datetime组件已关闭！');
   		console.log('选中的值为：', val);
   	},
