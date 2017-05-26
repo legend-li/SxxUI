@@ -502,7 +502,6 @@ export default {
   	}
   },
   mounted () {
-  	console.log('visibility:', this.visibility)
   	if(this.visibility){
 	  	this.opacity = 1;
   	}
