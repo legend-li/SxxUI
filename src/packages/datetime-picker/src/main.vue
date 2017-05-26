@@ -127,6 +127,26 @@ export default {
   		selectValueS: ''
   	};
   },
+  watch: {
+  	selectValueY () {
+  		this.updateSelect()
+  	},
+  	selectValueM () {
+  		this.updateSelect()
+  	},
+  	selectValueD () {
+  		this.updateSelect()
+  	},
+  	selectValueH () {
+  		this.updateSelect()
+  	},
+  	selectValuem () {
+  		this.updateSelect()
+  	},
+  	selectValueS () {
+  		this.updateSelect()
+  	}
+  },
   created () {
   	const self = this;
   	// 更新可选日期/时间
@@ -208,17 +228,6 @@ export default {
   		self.selectValueH = thisH;
 		self.selectValuem = thism;
 		self.selectValueS = thisS;
-		switch (self.type) {
-			case 'datetime':
-				self.selectDatetime = thisY + '-' + thisM + '-' + thisD + ' ' + thisH + ':' + thism + ':' + thisS;
-				break;
-			case 'date':
-				self.selectDatetime = thisY + '-' + thisM + '-' + thisD;
-				break;
-			case 'time':
-				self.selectDatetime = thisH + ':' + thism + ':' + thisS;
-				break;
-		}
   	}
 //    let selectValueM = self.thisM;
   	let defaultDatetime = self.defaultDatetime.trim();
@@ -356,6 +365,27 @@ export default {
 			}
 		}
   	},
+  	updateSelect() {
+  		// 更新选中日期/时间
+  		const self = this;
+  		let thisY = self.selectValueY;
+  		let thisM = self.selectValueM;
+  		let thisD = self.selectValueD;
+  		let thisH = self.selectValueH;
+  		let thism = self.selectValuem;
+  		let thisS = self.selectValueS;
+		switch (self.type) {
+			case 'datetime':
+				self.selectDatetime = thisY + '-' + thisM + '-' + thisD + ' ' + thisH + ':' + thism + ':' + thisS;
+				break;
+			case 'date':
+				self.selectDatetime = thisY + '-' + thisM + '-' + thisD;
+				break;
+			case 'time':
+				self.selectDatetime = thisH + ':' + thism + ':' + thisS;
+				break;
+		}
+  	},
   	getValue (type, val) { //选中的日期/时间改变的时候，改变可选日期/时间
   		switch (type) {
   			case 'Y': 
@@ -431,9 +461,17 @@ export default {
   	},
   	close (type) {
   		if(type === 'cancel'){
-  			this.cancel ? this.cancel() : '';
+  			if(this.cancel){
+  				setTimeout(() => {
+  					this.cancel()
+  				}, 300)
+  			};
   		}else if(type === 'confirm'){
-  			this.confirm ? this.confirm(this.selectDatetime) : '';
+  			if(this.confirm){
+  				setTimeout(() => {
+  					this.confirm(this.selectDatetime)
+  				}, 300)
+  			}
   		}
   		this.opacity = 0;
   		this.$el.addEventListener('transitionend', this.destroyElement);
