@@ -206,15 +206,20 @@ export default {
 	    		self.endD = arr[2];
 	    	}
 	    }
+
+	    self.listY = [];
 	    for(let m=startY, n=endY; m<=n; m++){
 	    	self.listY.push(String(m));
 	    }
 
+	    self.listM = [];
 		for(let i=1; i<=12; i++){
-			self.listM.push(i>9 ? String(i) : '0'+i);
+			let M = i>9 ? String(i) : '0'+i;
+			self.listM.push(M);
 		}
-
+		
 		let days = self.getDays(self.thisY, self.thisM);
+		self.listD = [];
 		for(let i=1; i<=days; i++){
 			self.listD.push(i>9 ? String(i) : '0'+i);
 		}
@@ -225,15 +230,19 @@ export default {
 		if(self.endHour){
 			endHour = self.endHour;
 		}
+
+		self.listH = [];
 	    for(let i=startHour, j=endHour; i<=j; i++){
 	    	let H = i>9 ? String(i) : '0'+i;
 	    	self.listH.push(H);
 	    }
 
+	    self.listm = [];
 	    for(let i=0; i<60; i++){
 	    	self.listm.push(i>9 ? String(i) : '0'+i);
 	    }
 
+	    self.listS = [];
 	    for(let i=0; i<60; i++){
 	    	self.listS.push(i>9 ? String(i) : '0'+i);
 	    }
@@ -412,11 +421,13 @@ export default {
   		switch (type) {
   			case 'Y': 
   				this.selectValueY = val;
+  				this.selectValueM = '01'
   				this.updateMonths(val);
 		  		//console.log('year:', val);
 		  		break;
 		  	case 'M': 
 		  		this.selectValueM = val;
+		  		this.selectValueD = '01';
 		  		this.updateDays(val);
   				//console.log('month:', val)
 		  		break;
