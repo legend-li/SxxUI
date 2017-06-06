@@ -140,7 +140,7 @@ export default {
   			this.opacity = 0;
   			setTimeout(() => {
 	  			this.showStatus = val;
-	  		},300)
+	  		},10)
   		}
   	},
   	defaultDatetime (val) {
