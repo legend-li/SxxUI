@@ -11,6 +11,8 @@
    <sxx-loading></sxx-loading>
  
 # options说明：
+```js
    {
        visible: false, // loading动画是否可见，默认为false，[type: Boolean][必填项]
    }
+```
