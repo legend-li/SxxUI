@@ -8,7 +8,7 @@
  *     Vue.component(Picker.name, Picker);
  * 
 # 用法：
-```js 
+```html
  <sxx-picker defaultValue="2017" onChange="getValue" list="listArr"></sxx-picker>
 ```
 
