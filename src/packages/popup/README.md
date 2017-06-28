@@ -8,12 +8,15 @@
  *     Vue.component(Popup.name, Popup);
  * 
 # 用法：
+```html
 	<sxx-popup>
 		<div>弹窗内容</div>
     	<button>关闭</button>
 	</sxx-popup>
+ ```
  
 # options说明：
+```js
    {
        visible: false, // 对话框是否可见，默认为false，[type: Boolean]
 
@@ -22,3 +25,4 @@
        afterClose: '', // popup 完全关闭后的回调，[type: Function]
 
    }
+```
