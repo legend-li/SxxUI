@@ -8,9 +8,12 @@
  *     Vue.component(Picker.name, Picker);
  * 
 # 用法：
-   <sxx-picker defaultValue="2017" onChange="getValue" list="listArr"></sxx-picker>
- 
+```js 
+ <sxx-picker defaultValue="2017" onChange="getValue" list="listArr"></sxx-picker>
+```
+
 # options说明：
+```js
    {
        defaultValue: '2017', // 默认滚动选中的值，[type: String|Number]
 
@@ -19,3 +22,4 @@
        onChange: '', // 在滚动停止的时候，会执行onChange函数，函数接受一个参数，这个参数是返回的当前滚动选中的值，[type: Function]
 
    }
+```
