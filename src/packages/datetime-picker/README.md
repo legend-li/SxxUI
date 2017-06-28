@@ -24,14 +24,17 @@
        
        startDate: '', // 日期的最小可选值，默认为十年前的1月1日，[type: String]，可选
                       // 格式为：yyyy-MM-dd
+                      
        endDate: '', // 日期的最大可选值，默认为十年后的 12 月 31 日，[type: String]，可选
                     // 格式为：yyyy-MM-dd
+                    
        startHour: '', // 小时的最小可选值，默认为：0，[type: Number]，可选
        
        endHour: '', // 小时的最大可选值，默认为：23，[type: Number]，可选
        
        confirm: '', // 回调函数，在点击确认之后执行，[type: Function]，必填
                     // 函数接受一个参数，参数是返回的选中的日期/时间，返回日期/时间格式为：yyyy-MM-dd HH:mm:ss或yyyy-MM-dd或HH:mm:ss
+                    
        cancel: '' // 回调函数，在点击取消之后执行，[type: Function]，必填
    }
  ```
