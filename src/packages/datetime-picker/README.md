@@ -5,7 +5,8 @@
  *     import DatetimePicker from 'xxx/datetime-picker'
  *   #2 安装组件
  *     Vue.component(DatetimePicker.name, DatetimePicker);
- * 
+ *
+ 
 # 用法：
  *  <sxx-datetime-picker></sxx-datetime-picker>
  
