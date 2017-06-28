@@ -13,7 +13,7 @@
  ```
  
 # options说明：
- ```json
+ ```js
    {
    	   visibility: false, //组件是否可见，默认可见,[type: Boolean]，必填
    	   
