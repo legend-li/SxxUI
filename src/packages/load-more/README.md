@@ -7,13 +7,13 @@
  *     Vue.component(LoadMore.name, LoadMore);
  * 
 # 用法：
- *   <sxx-load-more>
- *       <ul>
- *           <li></li>
- *       </ul>
- *       <div></div>
- *   </sxx-load-more>
- * 
+    <sxx-load-more>
+        <ul>
+            <li></li>
+        </ul>
+        <div></div>
+    </sxx-load-more>
+  
 # options说明：
    {
    
