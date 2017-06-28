@@ -7,14 +7,17 @@
  *     Vue.component(LoadMore.name, LoadMore);
  * 
 # 用法：
+```html
     <sxx-load-more>
         <ul>
             <li></li>
         </ul>
         <div></div>
     </sxx-load-more>
-  
+```
+
 # options说明：
+```js
    {
    
   		width: '', //LoadMore组件的宽度，[type: String,css的width属性的设置方法，支持所有width的css单位]
@@ -32,3 +35,4 @@
                           // 函数接收一个参数，参数为一个函数，参数函数功能是关闭上拉加载更多的loading状态，在bottomLoading函数内部需要关闭loading状态的时候执行参数函数
                          
    }
+```
