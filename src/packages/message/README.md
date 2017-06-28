@@ -20,10 +20,15 @@
                  1:带有“确认”按钮的消息弹窗，
                  2:带有“确认”，“取消”按钮的消息弹窗，
                  默认为1，[type:Number]
+                 
       title: '', // 消息弹窗标题内容，默认为空字符串，[type: String]
+      
       content: '', // 弹窗正文内容，默认为空字符串，[type: String]
+      
       transitionTime: 0.3, // 打开/关闭弹窗过渡时间，默认是0.3s，[type: Number, 单位:s]
+      
       autoOffTime: 0.3, //自动关闭消息时间，默认是0.3s，[type: Number, 单位:s]
+      
       callback: '' // 回调函数，在弹窗确认按钮点击之后执行，[type: Function]
   }
 ```
