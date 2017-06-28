@@ -20,7 +20,7 @@
 ```js
    {
    
-  		width: '', //LoadMore组件的宽度，[type: String,css的width属性的设置方法，支持所有width的css单位]
+    	width: '', //LoadMore组件的宽度，[type: String,css的width属性的设置方法，支持所有width的css单位]
      
     	height: '', //LoadMore组件的高度，[type: String,css的height属性的设置方法，支持所有height的css单位]
 
