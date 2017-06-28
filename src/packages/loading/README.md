@@ -8,8 +8,8 @@
  *     Vue.component(Loading.name, Loading);
  * 
 # 用法：
- *   <sxx-loading></sxx-loading>
- * 
+   <sxx-loading></sxx-loading>
+ 
 # options说明：
    {
        visible: false, // loading动画是否可见，默认为false，[type: Boolean][必填项]

@@ -8,11 +8,11 @@
  *     Vue.component(Popup.name, Popup);
  * 
 # 用法：
- *   <sxx-popup>
- *	 	<div>弹窗内容</div>
- *      <button>关闭</button>
- *	 </sxx-popup>
- * 
+	<sxx-popup>
+		<div>弹窗内容</div>
+    	<button>关闭</button>
+	</sxx-popup>
+ 
 # options说明：
    {
        visible: false, // 对话框是否可见，默认为false，[type: Boolean]

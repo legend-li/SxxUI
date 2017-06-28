@@ -8,8 +8,8 @@
  *     Vue.component(Picker.name, Picker);
  * 
 # 用法：
- *   <sxx-picker defaultValue="2017" onChange="getValue" list="listArr"></sxx-picker>
- * 
+   <sxx-picker defaultValue="2017" onChange="getValue" list="listArr"></sxx-picker>
+ 
 # options说明：
    {
        defaultValue: '2017', // 默认滚动选中的值，[type: String|Number]

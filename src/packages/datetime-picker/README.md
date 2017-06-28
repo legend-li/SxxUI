@@ -7,8 +7,8 @@
  *     Vue.component(DatetimePicker.name, DatetimePicker);
  * 
 # 用法：
- *   <sxx-datetime-picker></sxx-datetime-picker>
- * 
+   <sxx-datetime-picker></sxx-datetime-picker>
+ 
 # options说明：
    {
    	   visibility: false, //组件是否可见，默认可见,[type: Boolean]，必填
