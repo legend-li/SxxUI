@@ -21,6 +21,10 @@
  * 
  * options说明：
  * {
+ *     
+ *     width: '', //LoadMore组件的宽度，[type: String,css的width属性的设置方法，支持所有width的css单位]
+ *     
+ *     height: '', //LoadMore组件的高度，[type: String,css的height属性的设置方法，支持所有height的css单位]
  * 
  *     topLoadStatus: false, //下拉刷新配置。为true的时候，表示打开下拉刷新功能；为false的时候，表示关闭下拉刷新功能；默认关闭下拉刷新功能，[type: Boolean]。
  *     

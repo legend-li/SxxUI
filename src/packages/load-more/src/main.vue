@@ -1,7 +1,7 @@
 <template>
 	<div ref="sxxLoadMore" id="sxx-load-more" class="sxx-load-more" :style="{width: width, height: height}"
 	 @touchstart="touchStart" @touchmove="touchMove" @touchend="touchEnd">
-		<div class="sxx-load-top" :style="{marginTop: loadTopMargin, transition: 'margin '+topTransition+'s'}">
+		<div class="sxx-load-top" :style="{marginTop: loadTopMargin, transition: 'margin '+topTransition+'s'}" v-if="topLoadStatus&&topStatus">
 			<div class="sxx-load-icon" :class="{'sxx-load-rotate': loadTopStatus===0}" v-if="loadTopStatus!==2">↓</div>
 			<img :src="loadingAnimation" v-if="loadTopStatus===2" />
 			<div class="sxx-load-text" v-text="loadTopStatus===0 ? loadTopText1 : (loadTopStatus===1 ? loadTopText2 : loadTopText3)"></div>
