@@ -6,12 +6,12 @@
  *     import Popup from 'xxx/popup'
  *   #2 安装组件
  *     Vue.component(Popup.name, Popup);
- * 
+ 
 # 用法：
 ```html
 	<sxx-popup>
 		<div>弹窗内容</div>
-    	<button>关闭</button>
+		<button>关闭</button>
 	</sxx-popup>
  ```
  
