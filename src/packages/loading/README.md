@@ -6,7 +6,7 @@
  *     import Loading from 'xxx/loading'
  *   #2 安装组件
  *     Vue.component(Loading.name, Loading);
- * 
+ 
 # 用法：
    <sxx-loading></sxx-loading>
  
