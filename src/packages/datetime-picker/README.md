@@ -13,6 +13,7 @@
  ```
  
 # options说明：
+ ```json
    {
    	   visibility: false, //组件是否可见，默认可见,[type: Boolean]，必填
    	   
@@ -39,3 +40,4 @@
 
  	   cancel: '' // 回调函数，在点击取消之后执行，[type: Function]，必填
    }
+ ```
