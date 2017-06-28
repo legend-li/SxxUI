@@ -7,8 +7,9 @@
  *     Vue.component(DatetimePicker.name, DatetimePicker);
  *
  
-# 用法：
+ * 用法：
  *  <sxx-datetime-picker></sxx-datetime-picker>
+ *
  
 # options说明：
    {
