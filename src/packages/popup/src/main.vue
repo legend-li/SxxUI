@@ -1,5 +1,5 @@
 <template>
-	<div id="sxx-popup" class="sxx-popup" :style="{opacity: opacity}" v-show="show" @touchend="layerTap?layerTap:''">
+	<div id="sxx-popup" class="sxx-popup" :style="{opacity: opacity}" v-show="show" @touchend="layerTapCallback">
 		<slot>这是个自定义弹窗组件！</slot>
 	</div>
 </template>
@@ -30,24 +30,38 @@ export default {
   	visible (val){
   		const self = this;
   		if(val){
-  			self.opacity = 1;
+  			self.show = val;
+  			setTimeout(() => {
+  				self.opacity = 1;
+  			}, 10)
   		}else{
   			self.opacity = 0;
+  			setTimeout(() => {
+  				self.show = val;
+  				if(self.afterClose){
+	  				self.afterClose();
+	  			}
+  			},300)
   		}
-  		setTimeout(() => {
-  			self.show = val;
-  			if(!val&&self.afterClose){
-  				self.afterClose();
-  			}
-  		}, 300);
+  	}
+  },
+  methods: {
+  	layerTapCallback () {
+  		if(this.layerTap){
+  			this.layerTap();
+  		}
   	}
   },
   mounted () {
   	const self = this;
   	self.show = self.visible;
   	setTimeout(() => {
-  		self.opacity = 1;
-  	},1)
+  		if(self.visible){
+  			self.opacity = 1;
+  		}else{
+  			self.opacity = 0;
+  		}
+  	},10)
   }
 }
 </script>
