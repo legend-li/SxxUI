@@ -91,6 +91,7 @@ export default {
 	line-height: 1;
 	background-color: #333;
 	color: #fff;
+	box-sizing: border-box;
 }
 .message .display-table{
 	display: table;
