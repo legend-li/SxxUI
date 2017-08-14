@@ -3,8 +3,11 @@
   	<!--
   	<h1 style="font-size: 14px;">selectValue: {{selectValue}}</h1>
   	-->
+  	<sxx-calendar :visibility="visibility" :defaultDate="defaultDate" :startDate="startDate" :endDate="endDate" :cancel="cancel" :confirm="confirm"></sxx-calendar>
+  	<!--
   	<sxx-datetime-picker :visibility="visibility" :type="'datetime'" :defaultDatetime="defaultDatetime" :startDate="startDate" :endDate="endDate" :startHour="startHour" :endHour="endHour"
   	 :cancel="cancel" :confirm="confirm"></sxx-datetime-picker>
+  	-->
   	<!--
   	<sxx-picker :list="list" :defaultValue="2016" :onChange="getValue"></sxx-picker>
   	
@@ -28,7 +31,8 @@ export default {
   		startDate: '2000-02-02',
   		endDate: '2020-12-31',
   		startHour: 6,
-  		endHour: 18
+  		endHour: 18,
+  		defaultDate: '2017-08-14'
   	}
   },
   methods: {

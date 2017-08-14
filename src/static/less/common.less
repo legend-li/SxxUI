@@ -1,0 +1,195 @@
+@import url(./default-theme.less);
+html, body {
+	font-family: Helvetica, "Helvetica Neue", Arial, "Microsoft Yahei", sans-serif;
+	word-break: break-all;
+	font-synthesis: none;
+	text-rendering: optimizeLegibility;
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+	-moz-font-feature-settings: 'liga','kern';
+	-webkit-tap-highlight-color: transparent;
+	width: 100%;
+	min-height: 100%;
+	margin: 0;
+	padding: 0;
+	outline: none;
+	font-size: 14px;
+	overflow-x: hidden;
+}
+div{
+	-webkit-overflow-scrolling: touch;
+}
+img{
+	display: inline-block;
+	outline: none;
+	border: none;
+}
+a{
+	text-decoration: none;
+	color: white;
+}
+table,td, tr{
+	margin: 0;
+	padding: 0;
+	border-spacing: 0;
+}
+input, button,textarea{
+	margin: 0;
+	padding: 0;
+	outline: none;
+	border: none;
+	background: transparent;
+	-webkit-appearance: none;
+	-webkit-tap-highlight-color: rgba(0,0,0,0);
+}
+
+.bg_d9383f{
+	background-color: @color_d9383f;
+}
+.bg_f3f3f3{
+	background-color: @color_f3f3f3;
+}
+.bg_eee{
+	background-color: @color_eee;
+}
+.bg_ddd{
+	background-color: @color_ddd;
+}
+.bg_999{
+	background-color: @color_999;
+}
+.bg_f8b62d{
+	background-color: @color_f8b62d;
+}
+.bg_666{
+	background-color: @color_666;
+}
+.bg_333{
+	background-color: @color_333;
+}
+.bg_fff{
+	background-color: @color_fff;
+}
+.bg_b2b2b2{
+	background-color: @color_b2b2b2;
+}
+
+.color_d9383f{
+	color: @color_d9383f;
+}
+.color_f3f3f3{
+	color: @color_f3f3f3;
+}
+.color_eee{
+	color: @color_eee;
+}
+.color_ddd{
+	color: @color_ddd;
+}
+.color_999{
+	color: @color_999;
+}
+.color_f8b62d{
+	color: @color_f8b62d;
+}
+.color_666{
+	color: @color_666;
+}
+.color_333{
+	color: @color_333;
+}
+.color_fff{
+	color: @color_fff;
+}
+.color_b2b2b2{
+	color: @color_b2b2b2;
+}
+
+.float-l{
+	float: left;
+}
+.float-r{
+	float: right;
+}
+.clear:after{
+	display: block;
+	content: '';
+	clear: both;
+}
+.display-table{
+	display: table;
+	width: 100%;
+	height: 100%;
+}
+.display-table-cell{
+	display: table-cell;
+	vertical-align: middle;
+	text-align: center;
+	width: 100%;
+	height: 100%;
+}
+.text-align-l{
+	text-align: left;
+}
+.text-align-r{
+	text-align: right;
+}
+.text-align-c{
+	text-align: center;
+}
+.ellipsis{
+	display: block;
+	white-space: nowrap; 
+	overflow: hidden; 
+	text-overflow: ellipsis;
+}
+[v-cloak] { 
+	display: none;
+}
+/**************定义布局为盒模型*************/
+.flex {
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: flex;
+}
+/*******************************************/
+
+/**************盒模型垂直布局***************/
+.flex-v {
+    -webkit-box-orient: vertical;
+    -webkit-flex-direction: column;
+    flex-direction: column;
+}
+/*******************************************/
+
+/************子元素占据剩余的空间***********/
+.flex-1 {
+	-webkit-box-flex: 1;
+    -webkit-flex: 1;
+    flex: 1;
+}
+/*******************************************/
+
+/**************子元素垂直居中***************/
+.flex-align-center {
+    -webkit-box-align: center;
+    -webkit-align-items: center;
+    align-items: center;
+}
+/*******************************************/
+
+/**************子元素水平居中***************/
+.flex-pack-center{
+	-webkit-box-pack: center;
+    -webkit-justify-content: center;
+    justify-content: center;
+}
+/*******************************************/
+
+/**************子元素两端对齐***************/
+.flex-pack-justify{
+	-webkit-box-pack: justify;
+    -webkit-justify-content: space-between;
+    justify-content: space-between;
+}
+/*******************************************/
