@@ -19,6 +19,6 @@ new Vue({
   el: '#app',
   render: h => h(App),
   mounted () {
-  	this.$message('提示')
+//  	this.$message('提示')
   }
 })

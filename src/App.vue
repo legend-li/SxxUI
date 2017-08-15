@@ -3,7 +3,7 @@
   	<!--
   	<h1 style="font-size: 14px;">selectValue: {{selectValue}}</h1>
   	-->
-  	<sxx-calendar :visibility="visibility" :defaultDate="defaultDate" :startDate="startDate" :endDate="endDate" :cancel="cancel" :confirm="confirm"></sxx-calendar>
+  	<sxx-calendar :visibility="visibility" :defaultDate="defaultDate" :startDate="startDate" :endDate="endDate" :weekendDisabled="true" :cancel="cancel" :confirm="confirm"></sxx-calendar>
   	<!--
   	<sxx-datetime-picker :visibility="visibility" :type="'datetime'" :defaultDatetime="defaultDatetime" :startDate="startDate" :endDate="endDate" :startHour="startHour" :endHour="endHour"
   	 :cancel="cancel" :confirm="confirm"></sxx-datetime-picker>
@@ -53,10 +53,10 @@ export default {
   		this.visibility = false;
   		console.log('datetime组件已关闭！');
   	},
-  	confirm (val) {
+  	confirm (val, week) {
   		this.visibility = false;
   		console.log('datetime组件已关闭！');
-  		console.log('选中的值为：', val);
+  		console.log('选中的值为：', val, '选中值的星期是：', week);
   	},
   	getValue (val) {
   		this.selectValue = val;
