@@ -85,7 +85,7 @@ export default {
           setTimeout(() => {
               this.confirm(this.ResultValue);
               this.opacity = 0;
-          }, 800)
+          }, 80)
 	  },
       cancelStatus () {
 		  this.cancel();
@@ -122,13 +122,12 @@ export default {
 	}
 	.sxx-select-tit{
 		width: 100%;
-		border: 1px solid #eaeaea;
-		height:70px;
-		line-height: 70px;
+		height:0.7rem;
+		line-height: 0.7rem;
 		background: #F8B62D;
-		font-size: 30px;
+		font-size: 0.3rem;
 		color:#ffffff;
-		padding:0 30px;
+		padding:0 0.3rem;
 		display: flex;
 		justify-content: space-between;
 		box-sizing: border-box;
@@ -137,26 +136,31 @@ export default {
 		width: 100%;
 	}
 	.sxx-select-con .select-list{
-		width: 750px;
+		width: 7.50rem;
 		position: relative;
-		border-bottom: 1px solid #b2b2b2;
-		height:90px;
-		line-height: 90px;
-		font-size: 30px;
-		padding: 0 30px;
+		border-bottom: 1px solid #eaeaea;
+		height:0.9rem;
+		line-height: 0.9rem;
+		font-size: 0.3rem;
+		padding: 0 0.3rem;
 		display: flex;
 		justify-content: space-between;
 		box-sizing: border-box;
 	}
+	.sxx-select-con .select-list:last-child{
+		border-bottom: none;
+	}
 	.sxx-select-con .select-list .select-status{
-		width:30px;
-		height:90px;
-		background: url("../img/select.png") no-repeat 50% 50%;
+		width:0.3rem;
+		height:0.9rem;
+		background: url("../img/select.png") no-repeat center;
+		background-size: contain;
 	}
 	.sxx-select-con .select-list .select-selected{
-		width:30px;
-		height:90px;
-		background: url("../img/selected.png") no-repeat 50% 50%;
+		width:0.3rem;
+		height:0.9rem;
+		background: url("../img/selected.png") no-repeat center;
+		background-size: contain;
 	}
 
 </style>
