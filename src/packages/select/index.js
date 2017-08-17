@@ -14,7 +14,7 @@
 
  # 用法：
  ```html 
- <sxx-select-picker></sxx-select-picker>
+ <sxx-select></sxx-select>
  ```
 
  # options说明：

@@ -1,5 +1,5 @@
 <template>
-	<div id="sxx-select-picker" class="sxx-select" :style="{opacity: opacity}" v-if="showStatus" @touchend="cancelStatus">
+	<div id="sxx-select" class="sxx-select" :style="{opacity: opacity}" v-if="showStatus" @touchend="cancelStatus">
 		<div class="sxx-select-box" @touchend.stop >
 			<div class="sxx-select-tit">
 				<div>{{title}}</div>
@@ -15,10 +15,9 @@
 </template>
 
 <script>
-import Picker from '../../picker/src/main.vue'
 import Message from '../../message/src/main.js'
 export default {
-  name: 'sxx-select-picker',
+  name: 'sxx-select',
   props: {
   	visibility: Boolean,
 	title:{
