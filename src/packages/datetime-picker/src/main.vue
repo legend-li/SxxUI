@@ -171,9 +171,6 @@ export default {
   },
   methods: {
   	$message: Message,
-  	initDatetime () {
-  		let Y = '';
-  	},
   	resetDatetime () {
   		const self = this;
 	  	// 更新可选日期/时间
@@ -280,7 +277,7 @@ export default {
 	  		});
 	  		if(!within){
 	  			defaultSelect();
-	  			self.$message('传入组件DatetimePicker的props：defaultDatetime不在可选范围内！');
+	  			//self.$message('传入组件DatetimePicker的props：defaultDatetime不在可选范围内！');
 	  			console.log('传入组件DatetimePicker的props：defaultDatetime不在可选范围内！');
 	  			return;
 	  		}
@@ -338,7 +335,7 @@ export default {
 						self.selectValuem = timeArr[1];
 						self.selectValueS = timeArr[2];
 			  		}else{
-			  			self.$message('传入组件DatetimePicker的props：defaultDatetime格式不正确！');
+			  			//self.$message('传入组件DatetimePicker的props：defaultDatetime格式不正确！');
 			  			console.log('传入组件DatetimePicker的props：defaultDatetime格式不正确！');
 			  		}
 				})
