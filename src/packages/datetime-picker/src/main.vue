@@ -15,22 +15,22 @@
 					<div v-if="type==='datetime' || type==='time'">秒</div>
 				</div>
 				<div class="sxx-calendar-date-con">
-					<div v-if="type==='datetime' || type==='date'">
+					<div v-if="type==='datetime' || type==='date' || type==='dateYM'">
 						<sxx-picker :list="listY" :defaultValue="selectValueY" :onChange="getValue.bind(null, 'Y')"></sxx-picker>
 					</div>
-					<div v-if="type==='datetime' || type==='date'">
+					<div v-if="type==='datetime' || type==='date' || type==='dateYM' || type==='dateMD'">
 						<sxx-picker :list="listM" :defaultValue="selectValueM" :onChange="getValue.bind(null, 'M')"></sxx-picker>
 					</div>
-					<div v-if="type==='datetime' || type==='date'">
+					<div v-if="type==='datetime' || type==='date' || type==='dateMD'">
 						<sxx-picker :list="listD" :defaultValue="selectValueD" :onChange="getValue.bind(null, 'D')"></sxx-picker>
 					</div>
-					<div v-if="type==='datetime' || type==='time'">
+					<div v-if="type==='datetime' || type==='time' || type==='timeHM'">
 						<sxx-picker :list="listH" :defaultValue="selectValueH" :onChange="getValue.bind(null, 'H')"></sxx-picker>
 					</div>
-					<div v-if="type==='datetime' || type==='time'">
+					<div v-if="type==='datetime' || type==='time' || type==='timeHM' || type==='timeMS'">
 						<sxx-picker :list="listm" :defaultValue="selectValuem" :onChange="getValue.bind(null, 'm')"></sxx-picker>
 					</div>
-					<div v-if="type==='datetime' || type==='time'">
+					<div v-if="type==='datetime' || type==='time' || type==='timeMS'">
 						<sxx-picker :list="listS" :defaultValue="selectValueS" :onChange="getValue.bind(null, 'S')"></sxx-picker>
 					</div>
 				</div>
