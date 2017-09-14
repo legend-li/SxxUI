@@ -1,6 +1,6 @@
 
 # 组件安装方法：
- *   #1 引入Vue && DatetimePicker组件
+ *   #1 引入Vue && LoadMore组件
  *     import Vue from 'Vue' 
  *     import LoadMore from 'xxx/load-more'
  *   #2 安装组件

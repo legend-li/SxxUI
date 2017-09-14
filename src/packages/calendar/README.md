@@ -21,10 +21,10 @@
                         // 格式为：yyyy-MM-dd
 
        startDate: '', // 组件可选开始日期，默认为十年前的1月1日，[type: String]，可选
-                      // 格式为：yyyy-MM-dd
+                      // 格式为：yyyy-MM-dd，注：startDate和endDate是一组配置，同时使用才有效果，否则会报错
 
        endDate: '', // 组件可选结束日期，默认为十年后的12月31日，[type: String]，可选
-                    // 格式为：yyyy-MM-dd
+                    // 格式为：yyyy-MM-dd，注：startDate和endDate是一组配置，同时使用才有效果，否则会报错
 
        weekendDisabled: false, // 周六、周日是否可以选择，默认可以选择，可选
 
