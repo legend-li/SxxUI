@@ -171,6 +171,9 @@ export default {
   },
   methods: {
   	$message: Message,
+  	initDatetime () {
+  		let Y = '';
+  	},
   	resetDatetime () {
   		const self = this;
 	  	// 更新可选日期/时间
