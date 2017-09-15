@@ -7,27 +7,27 @@
 			</div>
 			<div class="sxx-calendar-con">
 				<div class="sxx-calendar-date-tit">
-					<div v-if="type==='datetime' || type==='date'">年</div>
-					<div v-if="type==='datetime' || type==='date'">月</div>
-					<div v-if="type==='datetime' || type==='date'">日</div>
-					<div v-if="type==='datetime' || type==='time'">时</div>
-					<div v-if="type==='datetime' || type==='time'">分</div>
-					<div v-if="type==='datetime' || type==='time'">秒</div>
+					<div v-if="type==='datetime' || type==='date' || type==='dateYM' || type==='datetimeHM'">年</div>
+					<div v-if="type==='datetime' || type==='date' || type==='dateYM' || type==='dateMD' || type==='datetimeHM'">月</div>
+					<div v-if="type==='datetime' || type==='date' || type==='dateMD' || type==='datetimeHM'">日</div>
+					<div v-if="type==='datetime' || type==='time' || type==='timeHM' || type==='datetimeHM'">时</div>
+					<div v-if="type==='datetime' || type==='time' || type==='timeHM' || type==='timeMS' || type==='datetimeHM'">分</div>
+					<div v-if="type==='datetime' || type==='time' || type==='timeMS'">秒</div>
 				</div>
 				<div class="sxx-calendar-date-con">
-					<div v-if="type==='datetime' || type==='date' || type==='dateYM'">
+					<div v-if="type==='datetime' || type==='date' || type==='dateYM' || type==='datetimeHM'">
 						<sxx-picker :list="listY" :defaultValue="selectValueY" :onChange="getValue.bind(null, 'Y')"></sxx-picker>
 					</div>
-					<div v-if="type==='datetime' || type==='date' || type==='dateYM' || type==='dateMD'">
+					<div v-if="type==='datetime' || type==='date' || type==='dateYM' || type==='dateMD' || type==='datetimeHM'">
 						<sxx-picker :list="listM" :defaultValue="selectValueM" :onChange="getValue.bind(null, 'M')"></sxx-picker>
 					</div>
-					<div v-if="type==='datetime' || type==='date' || type==='dateMD'">
+					<div v-if="type==='datetime' || type==='date' || type==='dateMD' || type==='datetimeHM'">
 						<sxx-picker :list="listD" :defaultValue="selectValueD" :onChange="getValue.bind(null, 'D')"></sxx-picker>
 					</div>
-					<div v-if="type==='datetime' || type==='time' || type==='timeHM'">
+					<div v-if="type==='datetime' || type==='time' || type==='timeHM' || type==='datetimeHM'">
 						<sxx-picker :list="listH" :defaultValue="selectValueH" :onChange="getValue.bind(null, 'H')"></sxx-picker>
 					</div>
-					<div v-if="type==='datetime' || type==='time' || type==='timeHM' || type==='timeMS'">
+					<div v-if="type==='datetime' || type==='time' || type==='timeHM' || type==='timeMS' || type==='datetimeHM'">
 						<sxx-picker :list="listm" :defaultValue="selectValuem" :onChange="getValue.bind(null, 'm')"></sxx-picker>
 					</div>
 					<div v-if="type==='datetime' || type==='time' || type==='timeMS'">
@@ -36,7 +36,7 @@
 				</div>
 			</div>
 		</div>
-	</div>
+	</div> 
 </template>
 
 <script>
@@ -171,6 +171,51 @@ export default {
   },
   methods: {
   	$message: Message,
+  	//组件初始化
+  	init () {
+  		//'datetime'、'datetimeHM'、'date'、'dateYM'、'dateMD'、'time'、'timeHM'、'timeMS'
+  		switch (this.type) {
+  			case 'datetime':
+  				this.initDatetime();
+  				break;
+  			case 'datetimeHM':
+  				this.initDatetimeHM();
+  				break;
+  			case 'date':
+  				this.initDate();
+  				break;
+  			case 'dateYM':
+  				this.initDateYM();
+  				break;
+  			case 'dateMD':
+  				this.initDateMD();
+  				break;
+  			case 'time':
+  				this.initTime();
+  				break;
+  			case 'timeHM':
+  				this.initTimeHM();
+  				break;
+  			case 'timeMS':
+  				this.initTimeMS();
+  				break;
+  			default:
+  				this.initDatetime();
+  				break;
+  		}
+  	},
+  	//组件初始化-type为'datetime'
+  	initDatetime () {
+  		//let 
+  	},
+  	//组件初始化-type为'datetimeHM'
+  	initDatetimeHM () {
+  		//
+  	},
+  	//组件初始化-type为'date'
+  	initDate () {
+  		//
+  	},
   	resetDatetime () {
   		const self = this;
 	  	// 更新可选日期/时间
