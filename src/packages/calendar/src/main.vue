@@ -145,6 +145,7 @@ export default {
   		switch (type) {
   			case 'Y': 
   				this.selectValueY = val;
+  				console.log('val:', val)
   				let listM = this.updateMonths(Number(val), this.startY, this.endY, this.startM, this.endM);
   				this.listM = listM;
   				let selectValueM = listM[0];
@@ -278,6 +279,7 @@ export default {
   	},
   	//计算可选月份列表
   	updateMonths (selectValueY, startY, endY, startM, endM) {
+  		console.log('selectValueY:', selectValueY, 'startY:', startY, 'endY:', endY, 'startM:', startM, 'endM:', endM)
   		let listM = [];
   		if(startY===endY){
 			if(startM === endM){
@@ -296,7 +298,7 @@ export default {
 					listM.push(i>9?String(i):'0'+i);
 				}
 			}else if(Number(selectValueY)===endY){
-				for(let i=1; i<=endY; i++){
+				for(let i=1; i<=endM; i++){
 					listM.push(i>9?String(i):'0'+i);
 				}
 			}else{
