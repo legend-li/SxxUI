@@ -72,7 +72,7 @@ export default {
   		}
   	},
   	isBottom () {
-  		if(this.getScrollTop()+this.getClientHeight() >= this.getScrollHeight()){
+  		if(this.getScrollTop()+this.getClientHeight() >= this.getScrollHeight()-2){
   			//console.log('到底部了！')
   			return true;
   		}else{
@@ -139,11 +139,13 @@ export default {
   			this.bottomStatus = true;
   			this.bottomIsLoading = true;
   			//console.log('加载更多......');
-  			this.bottomLoading(() => {
-  				this.dir = '';
-  				this.bottomIsLoading = false;
-  				this.bottomStatus = false;
-  			})
+  			setTimeout(() => {
+  				this.bottomLoading(() => {
+	  				this.dir = '';
+	  				this.bottomIsLoading = false;
+	  				this.bottomStatus = false;
+	  			})
+  			}, 300)
   		}
   	},
   	touchEnd (e) {

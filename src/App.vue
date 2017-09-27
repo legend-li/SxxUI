@@ -3,20 +3,20 @@
   	<!--
   	<h1 style="font-size: 14px;">selectValue: {{selectValue}}</h1>
   	-->
-  	
+  	<!--
   	<sxx-calendar :visibility="visibility" :defaultDate="defaultDate" :startDate="startDate" :endDate="endDate" :weekendDisabled="true" :cancel="cancel" :confirm="confirm"></sxx-calendar>
-  	
+  	-->
   	<!--
   	<sxx-datetime-picker :visibility="visibility" :type="'datetime'" :defaultDatetime="defaultDatetime" :startDate="startDate" :endDate="endDate" :startHour="startHour" :endHour="endHour"
   	 :cancel="cancel" :confirm="confirm"></sxx-datetime-picker>
   	-->
   	<!--
   	<sxx-picker :list="list" :defaultValue="2016" :onChange="getValue"></sxx-picker>
-  	
-  	<sxx-load-more :topLoading="topLoading" :bottomLoading="bottomLoading" :topLoadStatus="true" :bottomLoadStatus="true" :width="'100%'" :height="'10rem'">
-  		<div style="font-size: 18px;text-align: center;" v-for="item in 50" v-text="item"></div>
-  	</sxx-load-more>
   	-->
+  	<sxx-load-more :topLoading="topLoading" :bottomLoading="bottomLoading" :topLoadStatus="true" :bottomLoadStatus="true" :width="'100%'" :height="'10rem'">
+  		<div style="font-size: 18px;text-align: center;" v-for="item in 5" v-text="item"></div>
+  	</sxx-load-more>
+  	
   </div>
 </template>
 
@@ -42,14 +42,14 @@ export default {
   		setTimeout(() => {
   			console.log('closeLoading。。。');
   			closeLoading();
-  		}, 1000)
+  		}, 500)
   	},
   	bottomLoading (closeLoading) {
   		console.log('bottom loading')
   		setTimeout(function(){
   			console.log('bottom closeLoading。。。');
   			closeLoading();
-  		}, 5000)
+  		}, 500)
   	},
   	cancel () {
   		this.visibility = false;
