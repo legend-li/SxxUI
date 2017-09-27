@@ -14,7 +14,7 @@
   	<sxx-picker :list="list" :defaultValue="2016" :onChange="getValue"></sxx-picker>
   	-->
   	<sxx-load-more :topLoading="topLoading" :bottomLoading="bottomLoading" :topLoadStatus="true" :bottomLoadStatus="true" :width="'100%'" :height="'10rem'">
-  		<div style="font-size: 18px;text-align: center;" v-for="item in 5" v-text="item"></div>
+  		<div style="font-size: 18px;text-align: center;" v-for="item in 50" v-text="item"></div>
   	</sxx-load-more>
   	
   </div>

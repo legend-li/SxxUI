@@ -1,8 +1,8 @@
 <template>
 	<div id="sxx-picker" class="sxx-picker" :style="{opacity: opacity}">
 		<div class="sxx-picker-box" @touchstart.stop.prevent="touchStart" @touchmove.stop.prevent="touchMove" @touchend.stop.prevent="touchEnd">
-			<div class="sxx-picker-section" :style="{transform: 'translate3d(0px,'+translateY+'px'+',0px)', transitionDuration: transitionT+'s'}">
-				<div v-for="dateY in list" v-text="dateY"></div>
+			<div class="sxx-picker-section" v-if="sectionH" :style="{transform: 'translate3d(0px,'+translateY+'px'+',0px)', transitionDuration: transitionT+'s'}">
+				<div v-for="dateY in list" :style="{height: sectionH+'px'}" v-text="dateY"></div>
 			</div>
 			<div class="sxx-picker-cover"></div>
 			<div class="sxx-picker-selected" ref="dateSection"></div>
@@ -254,8 +254,10 @@ export default {
   },
   mounted () {
   	const self = this;
-  	const dateSection = self.$refs.dateSection.clientHeight+2; //获取到滚动块的高度
-  	self.sectionH = dateSection; //保存滚动块的高度
+  	let dateSection = self.$refs.dateSection.offsetHeight; //获取到滚动块的高度
+  	dateSection = parseInt(dateSection);
+  	self.$refs.dateSection.style.height = dateSection;
+  	self.sectionH = parseInt(dateSection); //保存滚动块的高度
   	if(self.list.length>0){
   		self.list.forEach((val, index) => {
 	  		if(self.defaultValue === val){
@@ -293,10 +295,12 @@ export default {
 	transition-timing-function: ease-out;
 }
 .sxx-picker-section > div{
+	height: 0.8rem;
 	font-size: 0.3rem;
     line-height: 0.8rem;
     color: #333333;
     text-align: center;
+    overflow: hidden;
 }
 .sxx-picker-cover{
 	position: absolute;
