@@ -68,11 +68,25 @@ export default {
   			setTimeout(() => {
   				self.opacity = 1;
   			}, 10)
+  			setTimeout(() => {
+  				self.resetSvg();
+  			}, 100)
   		}else{
   			self.opacity = 0;
   			setTimeout(() => {
   				self.show = val;
   			},10)
+  		}
+  	}
+  },
+  methods: {
+  	resetSvg () {
+  		if(this.$refs.loadingSvg){
+  			let svgH = parseInt(this.$refs.loadingSvg.clientHeight);
+		  	console.log('svgH:', svgH)
+		  	let svgW = svgH;
+		  	this.svgW = svgW+'px';
+		  	this.svgH = svgH+'px';
   		}
   	}
   },
@@ -86,10 +100,7 @@ export default {
   			self.opacity = 0;
   		}
   	},10)
-  	let svgH = parseInt(self.$refs.loadingSvg.clientHeight);
-  	let svgW = svgH;
-  	self.svgW = svgW+'px';
-  	self.svgH = svgH+'px';
+  	self.resetSvg();
   }
 }
 </script>
