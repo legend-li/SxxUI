@@ -2,7 +2,7 @@
 	<div id="sxx-loading" class="sxx-loading" :style="{opacity: opacity}" v-if="show">
 		<div class="sxx-loading-box">
 			<div class="sxx-loading-svg">
-				<svg width="30" height="30" viewBox="0 0 38 38" xmlns="http://www.w3.org/2000/svg">
+				<svg ref="loadingSvg" :style="{width: svgW, height: svgH}" viewBox="0 0 38 38" xmlns="http://www.w3.org/2000/svg">
 				    <defs>
 				        <linearGradient x1="8.042%" y1="0%" x2="65.682%" y2="23.865%" id="a">
 				            <stop stop-color="#fff" stop-opacity="0" offset="0%"/>
@@ -51,6 +51,8 @@ export default {
   	return {
   		opacity: 0, //默认初始化透明度
   		show: false,
+  		svgW: '1rem', //svg动画宽度
+  		svgH: '1rem', //svg动画高度
   	};
   },
   created () {
@@ -84,6 +86,10 @@ export default {
   			self.opacity = 0;
   		}
   	},10)
+  	let svgH = parseInt(self.$refs.loadingSvg.clientHeight);
+  	let svgW = svgH;
+  	self.svgW = svgW+'px';
+  	self.svgH = svgH+'px';
   }
 }
 </script>
@@ -116,8 +122,21 @@ export default {
 	height: 90%;
 }
 .sxx-loading-svg{
-	padding: 10px;
+	display: -webkit-box;
+    display: -webkit-flex;
+    display: flex;
+    -webkit-box-align: center;
+    -webkit-align-items: center;
+    align-items: center;
+    -webkit-box-pack: center;
+    -webkit-justify-content: center;
+    justify-content: center;
+	width: 2rem;
+	height: 2rem;
 	background-color: rgba(0,0,0,0.5);
-	border-radius: 5px;
+	border-radius: 0.1rem;
+}
+.sxx-loading-svg > svg{
+	margin: 0 auto;
 }
 </style>
