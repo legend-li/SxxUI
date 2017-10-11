@@ -6,9 +6,11 @@
   	<!--
   	<sxx-calendar :visibility="visibility" :defaultDate="defaultDate" :startDate="startDate" :endDate="endDate" :weekendDisabled="true" :cancel="cancel" :confirm="confirm"></sxx-calendar>
   	-->
+  	<!--
   	<sxx-datetime-picker :visibility="visibility" :type="'datetime'" :defaultDatetime="defaultDatetime" :startDate="startDate" :endDate="endDate" :startHour="startHour" :endHour="endHour"
   	 :cancel="cancel" :confirm="confirm"></sxx-datetime-picker>
-  	
+  	 -->
+  	<sxx-loading :visible="loading"></sxx-loading>
   	<!--
   	<sxx-picker :list="list" :defaultValue="2016" :onChange="getValue"></sxx-picker>
   	
@@ -24,6 +26,7 @@ export default {
   name: 'app',
   data () {
   	return {
+  		loading: true,
   		list: [2014,2015,2016,2017,2018,2019,2020,2021,2022,2023,2024,2025,2026,2027,2028,2029,2030,2031,2032,2033,2034,2035],
   		selectValue: '2016',
   		visibility: true,
