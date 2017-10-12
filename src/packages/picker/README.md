@@ -17,7 +17,7 @@
 # options说明：
 ```js
    {
-       defaultValue: '2017', // 默认滚动选中的值，可以用v-model来双向绑定数值 [type: String|Number]
+       value: '2017', // 默认滚动选中的值，可以用v-model来双向绑定数值 [type: String|Number]
 
        list: [], // 用来滚动选择的数据串，[type: Array]
 
