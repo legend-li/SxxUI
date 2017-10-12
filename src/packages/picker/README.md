@@ -10,12 +10,14 @@
 # 用法：
 ```html
  <sxx-picker defaultValue="2017" onChange="getValue" list="listArr"></sxx-picker>
+ 或
+ <sxx-picker v-model="year" list="listArr"></sxx-picker>
 ```
 
 # options说明：
 ```js
    {
-       defaultValue: '2017', // 默认滚动选中的值，[type: String|Number]
+       defaultValue: '2017', // 默认滚动选中的值，可以用v-model来双向绑定数值 [type: String|Number]
 
        list: [], // 用来滚动选择的数据串，[type: Array]
 
