@@ -1,5 +1,6 @@
 <template>
   <div id="app">
+  	<button style="border: 2px solid #ccc; padding: 5px;margin: 5px; border-radius: 4px;" @click="openDatetime">打开timedate组件</button>
   	<!--
   	<h1 style="font-size: 14px;">selectValue: {{selectValue}}</h1>
   	-->
@@ -13,13 +14,12 @@
   	<sxx-loading :visible="loading"></sxx-loading>
   	-->
   	<!--
-  	<sxx-picker :list="list" :defaultValue="00" :onChange="getValue"></sxx-picker>
+  	<sxx-picker :list="list" :value="2014" :onChange="getValue"></sxx-picker>
   	
   	<sxx-load-more :topLoading="topLoading" :bottomLoading="bottomLoading" :topLoadStatus="true" :bottomLoadStatus="true" :width="'100%'" :height="'10rem'">
   		<div style="font-size: 18px;text-align: center;" v-for="item in 50" v-text="item"></div>
   	</sxx-load-more>
   	-->
-  	<div @click="openDatetime">打开timedate组件</div>
   </div>
 </template>
 
