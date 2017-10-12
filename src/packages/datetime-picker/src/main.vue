@@ -7,53 +7,47 @@
 			</div>
 			<div class="sxx-calendar-con">
 				<div class="sxx-calendar-date-tit">
-					<div v-if="type==='datetime' || type==='date'">年</div>
-					<div v-if="type==='datetime' || type==='date'">月</div>
+					<div v-if="type==='datetime' || type==='date' || type==='dateYM'">年</div>
+					<div v-if="type==='datetime' || type==='date' || type==='dateYM'">月</div>
 					<div v-if="type==='datetime' || type==='date'">日</div>
 					<div v-if="type==='datetime' || type==='time'">时</div>
 					<div v-if="type==='datetime' || type==='time'">分</div>
-					<div v-if="type==='datetime' || type==='time'">秒</div>
 				</div>
 				<div class="sxx-calendar-date-con">
-					<div v-if="type==='datetime' || type==='date'">
-						<sxx-picker :list="listY" :defaultValue="selectValueY" :onChange="getValue.bind(null, 'Y')"></sxx-picker>
+					<div v-if="type==='datetime' || type==='date' || type==='dateYM'">
+						<sxx-picker :list="listY" v-model="selectValueY" :onChange="getValue.bind(null, 'Y')"></sxx-picker>
+					</div>
+					<div v-if="type==='datetime' || type==='date' || type==='dateYM'">
+						<sxx-picker :list="listM" v-model="selectValueM" :onChange="getValue.bind(null, 'M')"></sxx-picker>
 					</div>
 					<div v-if="type==='datetime' || type==='date'">
-						<sxx-picker :list="listM" :defaultValue="selectValueM" :onChange="getValue.bind(null, 'M')"></sxx-picker>
-					</div>
-					<div v-if="type==='datetime' || type==='date'">
-						<sxx-picker :list="listD" :defaultValue="selectValueD" :onChange="getValue.bind(null, 'D')"></sxx-picker>
+						<sxx-picker :list="listD" v-model="selectValueD" :onChange="getValue.bind(null, 'D')"></sxx-picker>
 					</div>
 					<div v-if="type==='datetime' || type==='time'">
-						<sxx-picker :list="listH" :defaultValue="selectValueH" :onChange="getValue.bind(null, 'H')"></sxx-picker>
+						<sxx-picker :list="listH" v-model="selectValueH" :onChange="getValue.bind(null, 'H')"></sxx-picker>
 					</div>
 					<div v-if="type==='datetime' || type==='time'">
-						<sxx-picker :list="listm" :defaultValue="selectValuem" :onChange="getValue.bind(null, 'm')"></sxx-picker>
-					</div>
-					<div v-if="type==='datetime' || type==='time'">
-						<sxx-picker :list="listS" :defaultValue="selectValueS" :onChange="getValue.bind(null, 'S')"></sxx-picker>
+						<sxx-picker :list="listm" v-model="selectValuem" :onChange="getValue.bind(null, 'm')"></sxx-picker>
 					</div>
 				</div>
 			</div>
 		</div>
-	</div>
+	</div> 
 </template>
 
 <script>
 import Picker from '../../picker/src/main.vue'
-import Message from '../../message/src/main.js'
 export default {
   name: 'sxx-datetime-picker',
   components: {
   	'sxx-picker': Picker
   },
   props: {
-  	visibility: Boolean,
   	type: {
   		type: String,
   		required: true
   	},
-  	defaultDatetime: {
+  	value: {
       type: String,
       default: ''
     },
@@ -105,13 +99,11 @@ export default {
   		thisD: new Date().getDate(), //当前日子
   		thisH: new Date().getHours(), //当前时间:小时
   		thism: new Date().getMinutes(), //当前时间:分钟
-  		thisS: new Date().getSeconds(), //当前时间:秒钟
   		listY: [], //年可选列表
   		listM: [], //月可选列表
   		listD: [], //日可选列表
   		listH: [], //小时可选列表
   		listm: [], //分钟可选列表
-  		listS: [], //秒可选列表
   		startY: String((new Date().getFullYear())-10),
   		startM: '01',
   		startD: '01',
@@ -126,51 +118,34 @@ export default {
   		selectValueD: '',
   		selectValueH: '',
   		selectValuem: '',
-  		selectValueS: ''
   	};
   },
   watch: {
-  	visibility (val) {
-  		if(val){
-  			this.showStatus = val;
-  			setTimeout(() => {
-	  			this.opacity = 1;
-	  		},10)
-  		}else{
-  			this.opacity = 0;
-  			setTimeout(() => {
-	  			this.showStatus = val;
-	  		},10)
-  		}
-  	},
-  	defaultDatetime (val) {
+  	value (val) {
   		this.resetDatetime();
   	},
-  	selectValueY () {
+  	selectValueY (val) {
+  		this.updateSelect()
+  		this.updateMonths(val);
+  	},
+  	selectValueM (val) {
+  		this.updateSelect()
+  		this.updateDays(val);
+  	},
+  	selectValueD (val) {
   		this.updateSelect()
   	},
-  	selectValueM () {
+  	selectValueH (val) {
   		this.updateSelect()
   	},
-  	selectValueD () {
+  	selectValuem (val) {
   		this.updateSelect()
   	},
-  	selectValueH () {
-  		this.updateSelect()
-  	},
-  	selectValuem () {
-  		this.updateSelect()
-  	},
-  	selectValueS () {
-  		this.updateSelect()
-  	}
   },
   created () {
-  	this.showStatus = this.visibility;
   	this.resetDatetime();
   },
   methods: {
-  	$message: Message,
   	resetDatetime () {
   		const self = this;
 	  	// 更新可选日期/时间
@@ -193,6 +168,13 @@ export default {
 	    		self.startY = arr[0];
 	    		self.startM = arr[1];
 	    		self.startD = arr[2];
+	    	}else if(arr.length === 2){
+	    		if(self.type === 'dateYM'){
+	    			startY = Number(arr[0]);
+		    		startM = Number(arr[1]);
+		    		self.startY = arr[0];
+		    		self.startM = arr[1];
+	    		}
 	    	}
 	    }
 	    if(endDate){
@@ -204,6 +186,13 @@ export default {
 	    		self.endY = arr[0];
 	    		self.endM = arr[1];
 	    		self.endD = arr[2];
+	    	}else if(arr.length === 2){
+	    		if(self.type === 'dateYM'){
+	    			endY = Number(arr[0]);
+		    		endM = Number(arr[1]);
+		    		self.endY = arr[0];
+		    		self.endM = arr[1];
+	    		}
 	    	}
 	    }
 
@@ -242,11 +231,6 @@ export default {
 	    	self.listm.push(i>9 ? String(i) : '0'+i);
 	    }
 
-	    self.listS = [];
-	    for(let i=0; i<60; i++){
-	    	self.listS.push(i>9 ? String(i) : '0'+i);
-	    }
-
 	  	// 更新默认选中日期/时间
 	  	function defaultSelect() { //当没有接收到默认选中值的时候，选中当前日期/时间
 	  		let thisY = String(self.thisY);
@@ -254,18 +238,15 @@ export default {
 	  		let thisD = String(self.thisD>9 ? self.thisD : '0'+self.thisD);
 	  		let thisH = String(self.thisH>9 ? self.thisH : '0'+self.thisH);
 	  		let thism = String(self.thism>9 ? self.thism : '0'+self.thism);
-	  		let thisS = String(self.thisS>9 ? self.thisS : '0'+self.thisS);
 	  		self.selectValueY = thisY;
 			self.selectValueM = thisM;
 			self.selectValueD = thisD;
 	  		self.selectValueH = thisH;
 			self.selectValuem = thism;
-			self.selectValueS = thisS;
 	  	}
-	//    let selectValueM = self.thisM;
-	  	let defaultDatetime = self.defaultDatetime.trim();
-	  	if(defaultDatetime){
-	  		let within = self.within(defaultDatetime, {
+	  	let value = self.value.trim();
+	  	if(value){
+	  		let within = self.within(value, {
 	  			startY: startY,
 	  			endY: endY, 
 	  			startM: startM,
@@ -275,22 +256,39 @@ export default {
 	  			startH: startHour,
 	  			endH: endHour
 	  		});
+
+	  		//初始化默认选中的年，月，日
+	  		self.selectValueY = null;
+			self.selectValueM = null;
+			self.selectValueD = null;
+
+	  		//初始化默认选中的小时,分钟
+	  		self.selectValueH = null;
+	  		self.selectValuem = null;
+	  		
 	  		if(!within){
 	  			defaultSelect();
-	  			self.$message('传入组件DatetimePicker的props：defaultDatetime不在可选范围内！');
-	  			console.log('传入组件DatetimePicker的props：defaultDatetime不在可选范围内！');
+	  			console.log('传入组件DatetimePicker的props：value不在可选范围内！');
 	  			return;
 	  		}
-	  		let dateTimeArr = defaultDatetime.split(' ');
+
+	  		let dateTimeArr = value.split(' ');
 	  		if(dateTimeArr.length>0&&dateTimeArr.length<3){
-	  			self.selectDatetime = defaultDatetime; //更新默认选中日期/时间到确定按钮选中的日期/时间
+	  			self.selectDatetime = value; //更新默认选中日期/时间到确定按钮选中的日期/时间
 	  			dateTimeArr.forEach(function(item, index) {
 					if(!item) return;
 			  		let dateArr = item.split('-'), timeArr = item.split(':');
-			  		if(dateArr.length === 3){
+			  		if(dateArr.length===3 && index===0){
 			  			self.selectValueY = dateArr[0];
 						self.selectValueM = dateArr[1];
 						self.selectValueD = dateArr[2];
+
+						let listD = [];
+			  			for(let i=1, j=self.getDays(Number(dateArr[0]), Number(dateArr[1])); i<=j; i++){
+			  				let D = i>9 ? String(i) : '0'+i;
+			  				listD.push(D);
+			  			}
+			  			self.listD = listD;
 
 			  			if(Number(dateArr[0]) === startY){
 			  				let listM = [];
@@ -299,6 +297,14 @@ export default {
 				  				listM.push(M);
 				  			}
 				  			self.listM = listM;
+				  			if(Number(dateArr[1]) === startM){
+				  				let listD = [];
+					  			for(let i=startD, j=self.getDays(Number(dateArr[0]), Number(dateArr[1])); i<=j; i++){
+					  				let D = i>9 ? String(i) : '0'+i;
+					  				listD.push(D);
+					  			}
+					  			self.listD = listD;
+				  			}
 			  			}else if(Number(dateArr[0]) === endY){
 			  				let listM = [];
 				  			for(let i=1, j=endM; i<=j; i++){
@@ -306,37 +312,41 @@ export default {
 				  				listM.push(M);
 				  			}
 				  			self.listM = listM;
+				  			if(Number(dateArr[1]) === endM){
+				  				let listD = [];
+					  			for(let i=1, j=endD; i<=j; i++){
+					  				let D = i>9 ? String(i) : '0'+i;
+					  				listD.push(D);
+					  			}
+					  			self.listD = listD;
+				  			}
 			  			}
-
-			  			if(Number(dateArr[1]) === startM){
-			  				let listD = [];
-				  			for(let i=startD, j=self.getDays(Number(dateArr[0]), Number(dateArr[1])); i<=j; i++){
-				  				let D = i>9 ? String(i) : '0'+i;
-				  				listD.push(D);
+			  		}else if(dateArr.length===2 && index===0){
+			  			if(self.type === 'dateYM'){
+			  				self.selectValueY = dateArr[0];
+							self.selectValueM = dateArr[1];
+							
+							if(parseInt(dateArr[0]) === startY){
+				  				let listM = [];
+					  			for(let i=startM, j=12; i<=j; i++){
+					  				let M = i>9 ? String(i) : '0'+i;
+					  				listM.push(M);
+					  			}
+					  			self.listM = listM;
+				  			}else if(parseInt(dateArr[0]) === endY){
+				  				let listM = [];
+					  			for(let i=1, j=endM; i<=j; i++){
+					  				let M = i>9 ? String(i) : '0'+i;
+					  				listM.push(M);
+					  			}
+					  			self.listM = listM;
 				  			}
-				  			self.listD = listD;
-			  			}else if(Number(dateArr[1]) === endM){
-			  				let listD = [];
-				  			for(let i=1, j=endD; i<=j; i++){
-				  				let D = i>9 ? String(i) : '0'+i;
-				  				listD.push(D);
-				  			}
-				  			self.listD = listD;
-			  			}else{
-			  				let listD = [];
-				  			for(let i=1, j=self.getDays(Number(dateArr[0]), Number(dateArr[1])); i<=j; i++){
-				  				let D = i>9 ? String(i) : '0'+i;
-				  				listD.push(D);
-				  			}
-				  			self.listD = listD;
 			  			}
-			  		}else if(timeArr.length === 3){
+			  		}else if(timeArr.length === 2){
 						self.selectValueH = timeArr[0];
 						self.selectValuem = timeArr[1];
-						self.selectValueS = timeArr[2];
 			  		}else{
-			  			self.$message('传入组件DatetimePicker的props：defaultDatetime格式不正确！');
-			  			console.log('传入组件DatetimePicker的props：defaultDatetime格式不正确！');
+			  			console.log('传入组件DatetimePicker的props：value格式不正确！');
 			  		}
 				})
 	  		}
@@ -353,18 +363,44 @@ export default {
   		arr.forEach((item, index) => {
   			let dateArr = item.split('-');
   			let timeArr = item.split(':');
-  			if(dateArr.length === 3){
-  				if(dateArr[0]<self.startY || dateArr[0]>self.endY){
+  			if(dateArr.length===3 && index===0){
+  				if(parseInt(dateArr[0])<parseInt(self.startY) || parseInt(dateArr[0])>parseInt(self.endY)){
   					result = false;
   				}
-  				if(dateArr[1]<self.startM || dateArr[1]>self.endM){
+  				if(parseInt(dateArr[0])===parseInt(self.startY)){
+  					if(parseInt(dateArr[1])<parseInt(self.startM)){
+  						result = false;
+  					}else if(parseInt(dateArr[1])===parseInt(self.startM)){
+  						if(parseInt(dateArr[2])<parseInt(self.startD)){
+  							result = false;
+  						}
+  					}
+  				}
+  				if(parseInt(dateArr[0])===parseInt(self.endY)){
+  					if(parseInt(dateArr[1])>parseInt(self.endM)){
+  						result = false;
+  					}else if(parseInt(dateArr[1])===parseInt(self.endM)){
+  						if(parseInt(dateArr[2])>parseInt(self.endD)){
+  							result = false;
+  						}
+  					}
+  				}
+  			}else if(dateArr.length===2 && index===0){
+  				if(parseInt(dateArr[0])<parseInt(self.startY) || parseInt(dateArr[0])>parseInt(self.endY)){
   					result = false;
   				}
-  				if(dateArr[2]<self.startD || dateArr[2]>self.endD){
-  					result = false;
+  				if(parseInt(dateArr[0])===parseInt(self.startY)){
+  					if(parseInt(dateArr[1])<parseInt(self.startM)){
+  						result = false;
+  					}
   				}
-  			}else if(timeArr.length === 3){
-  				if(timeArr[0]<self.startH || timeArr[0]>self.endH){
+  				if(parseInt(dateArr[0])===parseInt(self.endY)){
+  					if(parseInt(dateArr[1])>parseInt(self.endM)){
+  						result = false;
+  					}
+  				}
+  			}else if(timeArr.length===2){
+  				if(parseInt(timeArr[0])<parseInt(self.startH) || parseInt(timeArr[0])>parseInt(self.endH)){
   					result = false;
   				}
   			}else{
@@ -404,16 +440,18 @@ export default {
   		let thisD = self.selectValueD;
   		let thisH = self.selectValueH;
   		let thism = self.selectValuem;
-  		let thisS = self.selectValueS;
 		switch (self.type) {
 			case 'datetime':
-				self.selectDatetime = thisY + '-' + thisM + '-' + thisD + ' ' + thisH + ':' + thism + ':' + thisS;
+				self.selectDatetime = thisY + '-' + thisM + '-' + thisD + ' ' + thisH + ':' + thism;
 				break;
 			case 'date':
 				self.selectDatetime = thisY + '-' + thisM + '-' + thisD;
 				break;
+			case 'dateYM':
+				self.selectDatetime = thisY + '-' + thisM;
+				break;
 			case 'time':
-				self.selectDatetime = thisH + ':' + thism + ':' + thisS;
+				self.selectDatetime = thisH + ':' + thism;
 				break;
 		}
   	},
@@ -423,48 +461,38 @@ export default {
   				this.selectValueY = val;
   				this.selectValueM = '01'
   				this.updateMonths(val);
-		  		//console.log('year:', val);
-		  		break;
+  				break;
 		  	case 'M': 
 		  		this.selectValueM = val;
 		  		this.selectValueD = '01';
 		  		this.updateDays(val);
-  				//console.log('month:', val)
 		  		break;
 		  	case 'D': 
 		  		this.selectValueD = val;
-		  		//console.log('date:', val);
 		  		break;
 		  	case 'H': 
 		  		this.selectValueH = val;
-		  		//console.log('hour:', val);
 		  		break;
 		  	case 'm': 
 		  		this.selectValuem = val;
-		  		//console.log('minute:', val);
-		  		break;
-		  	case 'S': 
-		  		this.selectValueS = val;
-		  		//console.log('second:', val);
 		  		break;
   		}
   	},
   	updateMonths (selectY) { //更新可选月份列表
   		const self = this;
+  		let newListM = [];
   		if(selectY===self.startY){
-  			let newListM = [];
   			for(let i=Number(self.startM); i<=12; i++){
   				newListM.push(i>9 ? String(i) : '0'+i);
   			}
   			self.listM = newListM;
   		}else if(selectY===self.endY){
-  			let newListM = [];
   			for(let i=1; i<=self.endM; i++){
   				newListM.push(i>9 ? String(i) : '0'+i);
   			}
   			self.listM = newListM;
   		}else{
-  			self.listM = ['01','02','03','04','05','06','07','08','09','10','11','12'];
+  			self.listM = newListM = ['01','02','03','04','05','06','07','08','09','10','11','12'];
   		}
   	},
   	updateDays (selectM) { //更新月内可选天
@@ -492,6 +520,12 @@ export default {
   			self.listD = newListD;
   		}
   	},
+  	open () {
+  		this.showStatus = true;
+		setTimeout(() => {
+			this.opacity = 1;
+		},10)
+  	},
   	close (type) {
   		if(type === 'cancel'){
   			if(this.cancel){
@@ -502,6 +536,7 @@ export default {
   		}else if(type === 'confirm'){
   			if(this.confirm){
   				setTimeout(() => {
+  					this.$emit('input', this.selectDatetime);
   					this.confirm(this.selectDatetime)
   				}, 300)
   			}
@@ -510,11 +545,6 @@ export default {
   		this.$el.addEventListener('transitionend', () => {
   			this.showStatus = false;
   		});
-  	}
-  },
-  mounted () {
-  	if(this.visibility){
-	  	this.opacity = 1;
   	}
   }
 }

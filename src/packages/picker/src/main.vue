@@ -19,7 +19,7 @@ export default {
   		required: true
   	},
   	onChange: Function,
-  	defaultValue: [String, Number]
+  	value: [String, Number]
   },
   data () {
   	return {
@@ -38,6 +38,10 @@ export default {
   watch: {
   	list (val, oldVal){
   		this.translateY = this.sectionH*2;
+  		this.init(this.sectionH);
+  	},
+  	value (val, oldVal) {
+  		this.init(this.sectionH);
   	}
   },
   methods: {
@@ -52,6 +56,7 @@ export default {
   				let multiple = Y/sectionH;
   				val = this.list[2-multiple];
   			}
+  			this.$emit('input', val);
   			this.onChange(val);
   		}
   	},
@@ -250,19 +255,32 @@ export default {
 		}
   		
   		//console.log('end:', end);
+  	},
+  	//初始化
+  	init (dateSection) {
+  		const self = this;
+  		if(self.list.length>0){
+	  		let valid = self.list.some((val, index) => {
+	  			if(self.value === val){
+		  			self.translateY = dateSection*(2-index)
+		  			return true;
+		  		}else{
+		  			return false;
+		  		}
+		  	})
+		  	if(!valid){
+		  		self.translateY = dateSection*2;
+		  		this.$emit('input', self.list[0]);
+		  	}
+	  		
+	  	}
   	}
   },
   mounted () {
   	const self = this;
   	const dateSection = self.$refs.dateSection.clientHeight+2; //获取到滚动块的高度
   	self.sectionH = dateSection; //保存滚动块的高度
-  	if(self.list.length>0){
-  		self.list.forEach((val, index) => {
-	  		if(self.defaultValue === val){
-	  			self.translateY = dateSection*(2-index)
-	  		}
-	  	})
-  	}
+  	self.init(dateSection); //初始化
   	setTimeout(function() {
   		self.opacity = 1;
   	},1)
