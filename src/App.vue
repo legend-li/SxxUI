@@ -1,12 +1,15 @@
 <template>
   <div id="app">
   	<button style="border: 2px solid #ccc; padding: 5px;margin: 5px; border-radius: 4px;" @click="openDatetime">打开timedate组件</button>
+  	<!--<button style="border: 2px solid #ccc; padding: 5px;margin: 5px; border-radius: 4px;" @click="openCommonPicker">打开common-picker组件</button>-->
+  	
   	<!--
   	<h1 style="font-size: 14px;">selectValue: {{selectValue}}</h1>
   	-->
   	<!--
   	<sxx-calendar :visibility="visibility" :defaultDate="defaultDate" :startDate="startDate" :endDate="endDate" :weekendDisabled="true" :cancel="cancel" :confirm="confirm"></sxx-calendar>
   	-->
+  	
   	<sxx-datetime-picker ref="datetime" :type="'datetime'" v-model="datetime" :startDate="startDate" :endDate="endDate" :startHour="startHour" :endHour="endHour"
   	 :cancel="cancel" :confirm="confirm"></sxx-datetime-picker>
   	<!-- 
@@ -18,6 +21,8 @@
   	<sxx-load-more :topLoading="topLoading" :bottomLoading="bottomLoading" :topLoadStatus="true" :bottomLoadStatus="true" :width="'100%'" :height="'10rem'">
   		<div style="font-size: 18px;text-align: center;" v-for="item in 50" v-text="item"></div>
   	</sxx-load-more>
+  	
+  	<sxx-common-picker ref="commonPicker" :list="commonList" v-model="selectCommon" :confir="getCommonPicker"></sxx-common-picker>
   	-->
   </div>
 </template>
@@ -37,12 +42,17 @@ export default {
   		endDate: '2022-12-03',
   		startHour: 6,
   		endHour: 18,
-  		defaultDate: '2017-08-14'
+  		defaultDate: '2017-08-14',
+  		selectCommon: '',
+  		commonList: ['江苏','湖南','湖北','广西','浙江','福建','湖南','河南'],
   	}
   },
   watch: {
   	datetime (val) {
   		console.log('datetime:', val)
+  	},
+  	selectCommon (val) {
+  		console.log('commonpicker:', val);
   	}
   },
   methods: {
@@ -74,11 +84,19 @@ export default {
   	openDatetime () {
   		this.datetime = '2016-01-01 07:02'
   		this.$refs.datetime.open();
+  	},
+  	openCommonPicker () {
+  		this.$refs.commonPicker.open();
+  		this.selectCommon = '河南';
+  	},
+  	getCommonPicker (val) {
+  		console.log('commonpicker2:', val);
   	}
   },
   mounted () {
   	//this.$refs.datetime.open();
-  	this.openDatetime()
+  	//this.openDatetime()
+  	//this.openCommonPicker();
   }
 }
 </script>

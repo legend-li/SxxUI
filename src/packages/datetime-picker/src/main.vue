@@ -93,7 +93,7 @@ export default {
   data () {
   	return {
   		opacity: 0, //默认初始化透明度
-  		showStatus: true, //组件是否显示
+  		showStatus: false, //组件是否显示
   		thisY: new Date().getFullYear(), //今年的年份
   		thisM: new Date().getMonth()+1, //当前月份
   		thisD: new Date().getDate(), //当前日子
@@ -534,12 +534,11 @@ export default {
   				}, 300)
   			};
   		}else if(type === 'confirm'){
-  			if(this.confirm){
-  				setTimeout(() => {
-  					this.$emit('input', this.selectDatetime);
-  					this.confirm(this.selectDatetime)
-  				}, 300)
-  			}
+  			setTimeout(() => {
+	  			this.$emit('input', this.selectDatetime);
+	  			if(this.confirm)
+	  				this.confirm(this.selectDatetime)
+  			}, 300)
   		}
   		this.opacity = 0;
   		this.$el.addEventListener('transitionend', () => {

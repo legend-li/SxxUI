@@ -8,6 +8,7 @@ import LoadMore from './packages/load-more'
 import Message from './packages/message'
 import Calendar from './packages/calendar'
 import Loading from './packages/loading'
+import CommonPicker from './packages/common-picker'
 
 pageAuto();	//修改页面根元素font-size大小，以适应不同屏幕大小移动设备
 
@@ -17,6 +18,7 @@ Vue.use(LoadMore);
 Vue.use(Message);
 Vue.use(Calendar);
 Vue.use(Loading);
+Vue.use(CommonPicker);
 
 
 new Vue({
