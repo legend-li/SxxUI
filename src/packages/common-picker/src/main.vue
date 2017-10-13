@@ -6,12 +6,9 @@
 				<div @touchend="close('confirm')">确定</div>
 			</div>
 			<div class="sxx-all-con">
-				<!--<div class="sxx-all-all-tit">
-					<div v-for="title in titles">{{title}}</div>
-				</div>-->
 				<div class="sxx-all-all-con">
 					<div>
-						<sxx-picker :list="lists" :defaultValue="selectValue" :onChange="getValue"></sxx-picker>
+						<sxx-picker :list="list" v-model="selectValue"></sxx-picker>
 					</div>
 				</div>
 			</div>
@@ -21,80 +18,47 @@
 
 <script>
 import Picker from '../../picker/src/main.vue'
-import Message from '../../message/src/main.js'
 export default {
   name: 'sxx-common-picker',
   components: {
   	'sxx-picker': Picker
   },
   props: {
-  	visibility: Boolean,
-	lists:{
+	list:{
   	    type:Array,
 		required:true
 	},
-	index:{
-  	    type:Number,
-		default:function () {
-			return 0;
-        }
+	value:{
+  	    type:[String, Number]
 	},
   	confirm: {
-  		type: Function,
-  		default: function() {
-  			return '';
-  		}
+  		type: Function
   	},
   	cancel: {
-  		type: Function,
-  		default: function() {
-  			return '';
-  		}
+  		type: Function
   	}
   },
   data () {
   	return {
   		opacity: 0, //默认初始化透明度
   		showStatus: false, //组件是否显示
-  		selectList: '', //选中的List
   		selectValue: '',
-		Index:0
   	};
   },
   watch: {
-  	visibility (val) {
-  		if(val){
-  			this.showStatus = val;
-  			setTimeout(() => {
-	  			this.opacity = 1;
-	  		},10)
-  		}else{
-  			this.opacity = 0;
-  			setTimeout(() => {
-	  			this.showStatus = val;
-	  		},10)
-  		}
-  	},
-	index (val) {
-        this.Index = val;
-	},
-  	selectValue (val) {
-  		this.updateSelect();
-        this.Index=this.lists.indexOf(val);
-  	},
-  	lists (val) {
-        this.selectValue=val[this.Index];
-    }
+	value (val) {
+        this.selectValue = val;
+	}
   },
   created () {
-  	this.showStatus = this.visibility;
+  	this.selectValue = this.value;
   },
   methods: {
-  	updateSelect() {
-		this.selectList=this.selectValue;
-  	},
-  	getValue (val) {
-        this.selectValue = val;
+  	open () {
+  		this.showStatus = true;
+		setTimeout(() => {
+			this.opacity = 1;
+		},10)
   	},
   	close (type) {
   		if(type === 'cancel'){
@@ -104,6 +68,7 @@ export default {
   				}, 300)
   			};
   		}else if(type === 'confirm'){
+  			this.$emit('input', this.selectValue);
   			if(this.confirm){
   				setTimeout(() => {
   					this.confirm(this.selectValue)
@@ -114,11 +79,6 @@ export default {
   		this.$el.addEventListener('transitionend', () => {
   			this.showStatus = false;
   		});
-  	}
-  },
-  mounted () {
-  	if(this.visibility){
-	  	this.opacity = 1;
   	}
   }
 }
@@ -160,21 +120,6 @@ export default {
 	font-size: 0.3rem;
 	line-height: 0.8rem;
 	color: #d9383f;
-}
-.sxx-all-all-tit{
-	display: -webkit-box;
-    display: -webkit-flex;
-    display: flex;
-	width: 100%;
-}
-.sxx-all-all-tit > div{
-	-webkit-box-flex: 1;
-    -webkit-flex: 1;
-    flex: 1;
-    font-size: 0.26rem;
-    line-height: 0.6rem;
-    color: #d9383f;
-    text-align: center;
 }
 .sxx-all-all-con{
 	width: 100%;

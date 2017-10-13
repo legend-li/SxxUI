@@ -18,11 +18,11 @@
  * 
  * options说明：
  * {
- *     value: '2017', // 默认滚动选中的值，可以用v-model来双向绑定数值 [type: String|Number]
+ *     value: '2017', // 默认滚动选中的值，可以用v-model来双向绑定数值， [type: String|Number]，可选
  *
- *     list: [], // 用来滚动选择的数据串，[type: Array]
+ *     list: [], // 用来滚动选择的数据串，[type: Array]，必填
  *
- *     onChange: '', // 在滚动停止的时候，会执行onChange函数，函数接受一个参数，这个参数是返回的当前滚动选中的值，[type: Function]
+ *     onChange: '', // 在滚动停止的时候，会执行onChange函数，函数接受一个参数，这个参数是返回的当前滚动选中的值，[type: Function]，可选
  *
  * }
  */

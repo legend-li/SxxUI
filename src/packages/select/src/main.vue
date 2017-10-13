@@ -1,13 +1,13 @@
 <template>
-	<div id="sxx-select" class="sxx-select" :style="{opacity: opacity}" v-if="showStatus" @touchend="cancelStatus">
+	<div id="sxx-select" class="sxx-select" :style="{opacity: opacity}" v-if="showStatus" @touchend="close('cancel')">
 		<div class="sxx-select-box" @touchend.stop >
 			<div class="sxx-select-tit">
 				<div>{{title}}</div>
 			</div>
 			<div class="sxx-select-con">
-				<div class="select-list" v-for="(li,index) in list" @touchend="getListValue(index)">
+				<div class="select-list" v-for="(li,index) in list" @touchend="getListValue(li)">
 					<div>{{li}}</div>
-					<div class="select-status" :class="ResultValue===list[index]? 'select-selected': ''" ></div>
+					<div class="select-status" :class="selectedValue===li? 'select-selected': ''" ></div>
 				</div>
 			</div>
 		</div>
@@ -15,11 +15,9 @@
 </template>
 
 <script>
-import Message from '../../message/src/main.js'
 export default {
   name: 'sxx-select',
   props: {
-  	visibility: Boolean,
 	title:{
   	 	type:String,
 		required:true
@@ -31,71 +29,58 @@ export default {
             return value.length < 6
         }
 	},
-    index:{
-          type:Number,
-          default:function () {
-              return 0;
-          }
+    value:{
+          type:[Number,String]
     },
     confirm:{
-  	    type:Function,
-        required:true
+  	    type:Function
 	},
     cancel:{
-	   type:Function,
-	   required:true
+	   type:Function
     }
   },
   data () {
   	return {
   		opacity: 0, //默认初始化透明度
   		showStatus: false, //组件是否显示
-		ResultValue:'',
-        Index:0
+		selectedValue:'', //选中的值
   	};
   },
   watch: {
-  	visibility (val) {
-  		if(val){
-  			this.showStatus = val;
-  			setTimeout(() => {
-	  			this.opacity = 1;
-	  		},10)
-  		}else{
-  			this.opacity = 0;
-  			setTimeout(() => {
-	  			this.showStatus = val;
-	  		},10)
-  		}
-  	},
-	index (val) {
-		this.Index = val;
-	},
-    ResultValue (val) {
-        this.Index=this.list.indexOf(val);
+	value (val) {
+		this.selectedValue = val;
 	}
   },
   created () {
-  	this.showStatus = this.visibility;
-  	this.ResultValue=this.list[this.Index];
+  	this.selectedValue = this.value;
   },
   methods: {
-      getListValue (index) {
-		this.ResultValue=this.list[index];
-          setTimeout(() => {
-              this.confirm(this.ResultValue);
-              this.opacity = 0;
-          }, 80)
+      getListValue (val) {
+      	this.selectedValue = val;
+      	setTimeout(() => {
+			this.close('confirm');
+		}, 80)
 	  },
-      cancelStatus () {
-		  this.cancel();
-          this.opacity = 0;
+	  open () {
+	  	this.showStatus = true;
+	  	setTimeout(() => {
+	  		this.opacity = 1;
+	  	}, 10)
+	  },
+      close (type) {
+      	if(type === 'cancel'){
+      		if(this.cancel)
+      			this.cancel();
+      	}else if(type === 'confirm'){
+      		this.$emit('input', this.selectedValue)
+      		if(this.confirm)
+  				this.confirm(this.selectedValue);
+      	}
+        this.opacity = 0;
+	  	this.$el.addEventListener('transitionend', () => {
+			this.showStatus = false;
+		});
 	  }
-  },
-  mounted () {
-  	if(this.visibility){
-	  	this.opacity = 1;
-  	}
   }
 }
 </script>

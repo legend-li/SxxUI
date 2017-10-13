@@ -2,6 +2,7 @@
   <div id="app">
   	<button style="border: 2px solid #ccc; padding: 5px;margin: 5px; border-radius: 4px;" @click="openDatetime">打开timedate组件</button>
   	<button style="border: 2px solid #ccc; padding: 5px;margin: 5px; border-radius: 4px;" @click="openCommonPicker">打开common-picker组件</button>
+  	<button style="border: 2px solid #ccc; padding: 5px;margin: 5px; border-radius: 4px;" @click="openSelect">打开select组件</button>
   	
   	<!--
   	<h1 style="font-size: 14px;">selectValue: {{selectValue}}</h1>
@@ -23,7 +24,7 @@
   	</sxx-load-more>
   	-->
   	<sxx-common-picker ref="commonPicker" :list="commonList" v-model="selectCommon" :confirm="getCommonPicker"></sxx-common-picker>
-  	
+  	<sxx-select ref="select" v-model="selected" title="性别" :list="selectOptions"></sxx-select>
   </div>
 </template>
 
@@ -45,6 +46,8 @@ export default {
   		defaultDate: '2017-08-14',
   		selectCommon: '',
   		commonList: ['江苏','湖南','湖北','广西','浙江','福建','湖南','河南'],
+  		selected: '女',
+  		selectOptions: ['男','女'],
   	}
   },
   watch: {
@@ -53,6 +56,9 @@ export default {
   	},
   	selectCommon (val) {
   		console.log('commonpicker:', val);
+  	},
+  	selected (val) {
+  		console.log('selected:', val)
   	}
   },
   methods: {
@@ -91,6 +97,9 @@ export default {
   	},
   	getCommonPicker (val) {
   		console.log('commonpicker2:', val);
+  	},
+  	openSelect () {
+  		this.$refs.select.open();
   	}
   },
   mounted () {

@@ -46,10 +46,10 @@
  *	                // 注：type为'datetime'、'time'时有效
  *	                //     startHour和endHour是一组配置，同时配置才有效
  *
- *	   confirm: '', // 回调函数，在点击确认之后执行，[type: Function]，必填
+ *	   confirm: '', // 回调函数，在点击确认之后执行，[type: Function]，可选
  *	   				// 函数接受一个参数，参数是返回的选中的日期/时间，返回日期/时间格式为：yyyy-MM-dd HH:mm或yyyy-MM-dd或HH:mm
  *
- *	   cancel: '' // 回调函数，在点击取消之后执行，[type: Function]，必填
+ *	   cancel: '' // 回调函数，在点击取消之后执行，[type: Function]，可选
  * }
  * methods说明：
  * {

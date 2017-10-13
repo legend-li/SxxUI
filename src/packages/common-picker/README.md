@@ -8,22 +8,34 @@
  *
  
 # 用法：
- ```html  
- <sxx-common-picker></sxx-common-picker>
+ ```html 
+ <sxx-common-picker ref="commonPicker" v-model="value" :list="options"></sxx-common-picker>
+ ```
+ ```js
+ this.$refs.commonPicker.open();
  ```
  
 # options说明：
  ```js
    {
-       visibility: false, //组件是否可见，默认可见,[type: Boolean]，必填
+        list:[], //可选数据列表,[type:Array],必填,
 
-       lists:[] //数组，弹框中的列表,[type:Array],必填,
+     	value:'', //默认选中的列表项,可以用v-model来双向绑定数值, [type:Number||String],可选
 
-       index:'' //默认选中的列表项,[type:Number],可选
+     	confirm: fn, // 回调函数，在点击确认之后执行，[type: Function]，可选
+                  // 函数接受一个参数，参数是返回的选中的数据
 
-       confirm: '', // 回调函数，在点击确认之后执行，[type: Function]，必填
-                    // 函数接受一个参数，参数是返回的选中的数据
-                    
-       cancel: '' // 回调函数，在点击取消之后执行，[type: Function]，必填
+     	cancel: fn, // 回调函数，在点击取消之后执行，[type: Function]，可选
    }
+ ```
+  # methods说明：
+ ```js
+ {
+	 open: fn, // 打开组件的方法，
+               // 用法：<sxx-common-picker ref="commonPicker"></sxx-common-picker>
+               //       this.$refs.commonPicker.open()
+     close: fn, // 关闭组件的方法，
+                // 用法：<sxx-common-picker ref="commonPicker"></sxx-common-picker>
+                //       this.$refs.commonPicker.close()
+ }
  ```

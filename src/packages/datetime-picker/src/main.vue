@@ -45,7 +45,9 @@ export default {
   props: {
   	type: {
   		type: String,
-  		required: true
+  		default: function() {
+  			return 'datetime';
+  		}
   	},
   	value: {
       type: String,
@@ -78,16 +80,10 @@ export default {
   		}
   	},
   	confirm: {
-  		type: Function,
-  		default: function() {
-  			return '';
-  		}
+  		type: Function
   	},
   	cancel: {
-  		type: Function,
-  		default: function() {
-  			return '';
-  		}
+  		type: Function
   	}
   },
   data () {
