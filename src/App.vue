@@ -1,7 +1,7 @@
 <template>
   <div id="app">
   	<button style="border: 2px solid #ccc; padding: 5px;margin: 5px; border-radius: 4px;" @click="openDatetime">打开timedate组件</button>
-  	<!--<button style="border: 2px solid #ccc; padding: 5px;margin: 5px; border-radius: 4px;" @click="openCommonPicker">打开common-picker组件</button>-->
+  	<button style="border: 2px solid #ccc; padding: 5px;margin: 5px; border-radius: 4px;" @click="openCommonPicker">打开common-picker组件</button>
   	
   	<!--
   	<h1 style="font-size: 14px;">selectValue: {{selectValue}}</h1>
@@ -21,9 +21,9 @@
   	<sxx-load-more :topLoading="topLoading" :bottomLoading="bottomLoading" :topLoadStatus="true" :bottomLoadStatus="true" :width="'100%'" :height="'10rem'">
   		<div style="font-size: 18px;text-align: center;" v-for="item in 50" v-text="item"></div>
   	</sxx-load-more>
-  	
-  	<sxx-common-picker ref="commonPicker" :list="commonList" v-model="selectCommon" :confir="getCommonPicker"></sxx-common-picker>
   	-->
+  	<sxx-common-picker ref="commonPicker" :list="commonList" v-model="selectCommon" :confirm="getCommonPicker"></sxx-common-picker>
+  	
   </div>
 </template>
 
