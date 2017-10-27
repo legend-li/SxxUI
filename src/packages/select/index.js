@@ -14,7 +14,7 @@
 
  # 用法：
  ```html 
- <sxx-select v-model="value" title="性别" list="['男','女']"></sxx-select>
+ <sxx-select v-model="value" title="性别" :list="['男','女']"></sxx-select>
  ```
  ```js
  this.$refs.select.open()
