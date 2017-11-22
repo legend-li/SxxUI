@@ -40,7 +40,6 @@ export default {
   		this.$el.addEventListener('transitionend', this.destroyElement.bind(this,type));
   	},
   	destroyElement (type) {
-        this.$el.removeEventListener('transitionend', this.destroyElement);
         this.$destroy(true);
         this.$el.parentNode.removeChild(this.$el);
         if(type === 'affirm'){
